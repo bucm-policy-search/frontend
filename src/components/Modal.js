@@ -1,6 +1,4 @@
-import logo from './logo.svg';
 import '@elastic/eui/dist/eui_theme_amsterdam_light.css';
-import './App.css';
 
 import { EuiSpacer } from '@elastic/eui';
 import React, { useState } from 'react';
