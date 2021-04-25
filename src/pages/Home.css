@@ -1,0 +1,31 @@
+.title{
+    font-size: 4em;
+    padding-top: 10%;
+}
+
+.modal{
+    bottom: 15%;
+    position: absolute;
+    padding-left: auto;
+    padding-left: auto;
+}
+
+.flex-item-search-box{
+    height: 10em;
+    padding-top: 5%;
+}
+
+.flex-group{ 
+    height: 100%;
+    align-items: center;
+}
+
+.flex-item-search-box svg{
+    width: 150%;
+    height: 150%;
+    margin-left: 1.5em;
+}
+
+.flex-item-search-box input{
+    padding-left: 2em;
+}

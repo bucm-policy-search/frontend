@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import Modal from './components/Modal';
-import Search from './components/Search'
 import reportWebVitals from './reportWebVitals';
+import { EuiFlexGroup, EuiFlexItem } from '@elastic/eui';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
+
+import './index.css';
+import Home from './pages/Home'
 
 
 ReactDOM.render(
@@ -21,8 +22,7 @@ ReactDOM.render(
         </Route>
 
         <Route path='/'>
-          <Modal />
-          <Search />
+          <Home />
         </Route>
       </Switch>
     </Router>

@@ -1,6 +1,7 @@
 import { EuiFieldSearch } from '@elastic/eui';
 import React from 'react'
-import ReactDOM from 'react-dom'
+
+import './Search.css'
 
 class Search extends React.Component {
   constructor(props){
@@ -27,7 +28,7 @@ class Search extends React.Component {
         onChange={e=>{
           onChange(e)
         }}
-        
+        className = "euiFieldSearch"
       />
     )
     return (

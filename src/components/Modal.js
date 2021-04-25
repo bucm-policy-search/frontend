@@ -23,7 +23,7 @@ function App() {
 
   if (isModalVisible) {
     modal = (
-      <EuiModal onClose={closeModal}>
+      <EuiModal className="modal" onClose={closeModal}>
         <EuiModalHeader>
           <EuiModalHeaderTitle>
             <h1>关于我们</h1>
@@ -31,7 +31,7 @@ function App() {
         </EuiModalHeader>
 
         <EuiModalBody>
-          Bucmer
+        北京中医药大学管理学院学生，想做些对世界有意的事情
           <EuiSpacer />
           
         </EuiModalBody>
