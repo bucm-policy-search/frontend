@@ -1,3 +1,7 @@
+.flex-group{ 
+    align-items: center;
+}
+
 .title{
     font-size: 4em;
     padding-top: 10%;
@@ -11,21 +15,36 @@
 }
 
 .flex-item-search-box{
-    height: 10em;
+    /* height: 10em; */
+    /* width: 25em; */
+    width: 40%;
     padding-top: 5%;
 }
 
-.flex-group{ 
-    height: 100%;
-    align-items: center;
-}
+
 
 .flex-item-search-box svg{
-    width: 150%;
-    height: 150%;
-    margin-left: 1.5em;
+    width: 105%;
+    height: 105%;
+    margin-left: 4px;
 }
 
 .flex-item-search-box input{
     padding-left: 2em;
+}
+
+.flex-item-search-box >div >div{
+    width: 190%;
+}
+
+.flex-item-search-box >div >div button{
+    padding-right: 100%;
+}
+
+.euiOverlayMask div{
+    margin-left: -25%;
+}
+
+.euiOverlayMask div div{
+    margin-left: 0;
 }

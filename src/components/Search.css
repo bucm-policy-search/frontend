@@ -1,6 +1,8 @@
 .euiFieldSearch{
-    width: 25em;
+    max-width: 100%;
+    width: 350%;
     height: 3em;
     font-size: 2em;
+    border-radius: 0.5em;
 }
 
