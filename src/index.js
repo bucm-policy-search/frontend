@@ -11,18 +11,19 @@ import {
 
 import './index.css';
 import Home from './pages/Home'
+import Search from './pages/Search'
 
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Switch>
-        <Route path='/search'>
-          <h1>Search Page</h1>
+        <Route exact path='/'>
+          <Home />
         </Route>
 
-        <Route path='/'>
-          <Home />
+        <Route path='/search'>
+          <Search />
         </Route>
       </Switch>
     </Router>

@@ -31,7 +31,7 @@ function App() {
         </EuiModalHeader>
 
         <EuiModalBody>
-        北京中医药大学管理学院学生，想做些对世界有意的事情
+        北京中医药大学管理学院学生，想做些对世界有意义的事情
           <EuiSpacer />
           
         </EuiModalBody>
