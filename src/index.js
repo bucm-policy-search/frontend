@@ -13,10 +13,14 @@ import './index.css';
 import Home from './Home'
 import Search from './Search'
 
+import { createBrowserHistory } from "history";
+
+const history = createBrowserHistory();
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
+    <Router history={history}>
       <Switch>
         <Route exact path='/' component={Home} />
 

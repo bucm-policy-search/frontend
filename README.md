@@ -23,3 +23,10 @@ Access to fetch at 'http://localhost:3200/api/search?q=' from origin 'http://loc
 
 5. Internal Server Error
 用自带的`DEBUG=express:* node xxx.js`进行Debug
+
+6. ×
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: object.
+
+Check the render method of `Search`.
+
+this.setState遇见，用`[]`或`{}`包裹对应的值
