@@ -10,21 +10,17 @@ import {
 } from "react-router-dom";
 
 import './index.css';
-import Home from './pages/Home'
-import Search from './pages/Search'
+import Home from './Home'
+import Search from './Search'
 
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Switch>
-        <Route exact path='/'>
-          <Home />
-        </Route>
+        <Route exact path='/' component={Home} />
 
-        <Route path='/search'>
-          <Search />
-        </Route>
+        <Route path='/search' component={Search} />
       </Switch>
     </Router>
   </React.StrictMode>,

@@ -11,7 +11,16 @@ export default class SearchBox extends React.Component {
       value: '',
       isClearable: '',
       redirect: false,
-      searchContent: ''
+      searchContent: '',
+      firstInit: true
+    }
+  }
+
+  componentDidUpdate(prevState) {
+    if (this.state.value !== prevState.value && this.state.firstInit){
+      this.setState({
+        firstInit: false
+      })
     }
   }
 
@@ -32,7 +41,7 @@ export default class SearchBox extends React.Component {
     let searchBox = (
       <EuiFieldSearch
         placeholder="搜索"
-        value={this.state.value}
+        value={this.state.firstInit ? this.props.value : this.state.value}
         isClearable={isClearable}
         incremental={Boolean(0)}
         onChange={e => {
@@ -42,7 +51,6 @@ export default class SearchBox extends React.Component {
           onSearch(searchContent)
         }}
         className="euiFieldSearch"
-        // updateData={this.updateData}
       />
     )
 

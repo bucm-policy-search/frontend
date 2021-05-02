@@ -1,0 +1,22 @@
+.modal {
+  /* margin-top: 10vh; */
+  align-items: center;
+  display: flex;
+  color: grey
+}
+
+.modal > button {
+  /* margin: 35vh 40vw 0 40vw;
+  min-width: 150px;
+  align-items: center;
+  flex: 1;
+  width: 5vw;
+  font-size: 2vh; */
+  /* color: gray;
+  border-color: gray; */
+  min-width: 80px;
+}
+
+.modal >button:hover{
+  /* color: gray; */
+}
