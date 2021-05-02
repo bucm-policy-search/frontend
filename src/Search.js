@@ -6,7 +6,8 @@ import './Search.css'
 import SearchIcon from '@material-ui/icons/Search'
 import Button from '@material-ui/core/Button'
 
-console.log('23434:' + process.env.PROXY_URL)
+// const express = require('express')
+// const app = express()
 
 class Search extends React.Component {
 	constructor(props) {
@@ -21,12 +22,22 @@ class Search extends React.Component {
 	}
 
 	fetchData = () => {
-		let  searchContent  = this.state.inputValue
+		let searchContent = this.state.inputValue
 		if (searchContent) {
 			let fetch_url = process.env.REACT_APP_PROXY_URL + '?q=' + this.state.searchContent
-			console.log(fetch_url)
+			
+			// const options = {
+			// 	method: 'GET',
+			// 	headers:{
+			// 		"Access-Control-Allow-Origin": "http://localhost:3000",
+			// 	}
+			// }
 			fetch(fetch_url)
-				.then(data => console.log(data.body))
+				.then(res => res.json(res))
+				.then(data=>{
+					console.log(data)
+					return data
+				})
 				.catch(error => {
 					console.error('Error:', error);
 				})
@@ -55,16 +66,9 @@ class Search extends React.Component {
 				</div>
 				<Button onClick={this.handleSearch} variant="outlined" >搜索</Button>
 			</div>
-
-
 		)
-
-
-
 		return (search)
 	}
 }
-
-
 
 export default Search
