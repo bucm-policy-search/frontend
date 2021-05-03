@@ -8,34 +8,35 @@ import SearchIcon from '@material-ui/icons/Search'
 import Button from '@material-ui/core/Button'
 import styles from './index.module.css'
 
-
 function Search(props) {
 	const router = useRouter()
 	const { q } = router.query
 
-	const [inputValue, setInputValue] = useState(q || '')
+	console.log('q:' + q)
+	const [inputValue, setInputValue] = useState(q ? q : '')
+	const [haveFetchData, setHaveFetchData] = useState(false)
 	const [haveGetResult, setHaveGetResult] = useState(false)
-	const [data, setData] = useState(props.data)
+	const [data, setData] = useState({})
 
 	useEffect(() => {
-		if (!haveGetResult) {
-			setHaveGetResult(true)
+		console.log('inputValue:' + inputValue)
+		if (!haveFetchData && q) {
+			console.log('fetchResult now')
 			fetchData()
-
+			setHaveFetchData(true)
 		}
 	})
 
-	console.log('proxy_url:' + process.env.NEXT_PUBLIC_PROXY_URL)
-	const fetchData = () => {
-		let fetch_url = process.env.NEXT_PUBLIC_PROXY_URL + '?q=' + inputValue
 
+	const fetchData = () => {
+		let fetch_url = process.env.NEXT_PUBLIC_PROXY_URL + '?q=' + String(inputValue ? inputValue : q)
+		console.log('proxy_url:' + process.env.NEXT_PUBLIC_PROXY_URL + '?q=' + String(inputValue ? inputValue : q))
 		fetch(fetch_url)
-			.then(res => res.json(res))
+			.then(res => res.json())
 			.then(data => {
 				setData({ data })
+				console.log({data})
 				setHaveGetResult(true)
-				console.log(data)
-				return data
 			})
 			.catch(error => {
 				console.error('Error:', error);
@@ -47,6 +48,7 @@ function Search(props) {
 	}
 
 	const handleSearch = e => {
+		setHaveFetchData(false)
 		setHaveGetResult(false)
 		router.push({
 			pathname: '/search',
@@ -61,33 +63,37 @@ function Search(props) {
 
 	const Content = (
 		<div>
-			{haveGetResult && data.data.hits.hits.map((value) => {
-				<div className={styles.article}>
-					<a className={styles.article__title} key={value._source.title}>
+			{haveGetResult && data.data.hits.hits && 
+			// JSON.stringify(data.data.hits.hits)
+			data.data.hits.hits.map((value) => {
+				<div className={styles.article} key={value._source.title}>
+					<a className={styles.article__title} >
 						{value._source.title}
 					</a>
-					<p className={styles.article__detail} key={value._source.urlsource}>
+					{/* <p className={styles.article__detail} key={value._source.urlsource}>
 						{value._source.urlsource}
-					</p>
+					</p> */}
 				</div>
-			})}
+			})
+			
+			}
 		</div>
-
 	)
+
 	const Page = (
-		// <div>
-		// 	<div className={styles.header}>
-		// 		<div className={styles.input}>
-		// 			<SearchIcon className={styles.inputIcon} />
-		// 			<input value={inputValue} onChange={handleInputChange} />
-		// 		</div>
-		// 		<Button onClick={handleSearch} variant="outlined">搜索</Button>
-		// 	</div>
-		// 	{haveGetResult ? Content : <div> 正在搜索结果</div>}
-		// </div>
 		<div>
-			{JSON.stringify(data)}
+			<div className={styles.header}>
+				<div className={styles.input}>
+					<SearchIcon className={styles.inputIcon} />
+					<input value={inputValue} onChange={handleInputChange} />
+				</div>
+				<Button onClick={handleSearch} variant="outlined">搜索</Button>
+			</div>
+			{haveGetResult ? Content : <div> 正在搜索结果</div>}
 		</div>
+		// <div>
+		// 	{JSON.stringify(data)}
+		// </div>
 	)
 
 	return (Page)
