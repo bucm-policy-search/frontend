@@ -35,7 +35,7 @@ function Search(props) {
 			.then(res => res.json())
 			.then(data => {
 				setData({ data })
-				console.log({data})
+				console.log({ data })
 				setHaveGetResult(true)
 			})
 			.catch(error => {
@@ -62,23 +62,31 @@ function Search(props) {
 	}
 
 	const Content = (
-		<div>
-			{haveGetResult && data.data.hits.hits && 
-			// JSON.stringify(data.data.hits.hits)
-			data.data.hits.hits.map((value) => {
-				<div className={styles.article} key={value._source.title}>
-					<a className={styles.article__title} >
-						{value._source.title}
-					</a>
-					{/* <p className={styles.article__detail} key={value._source.urlsource}>
-						{value._source.urlsource}
-					</p> */}
-				</div>
-			})
-			
+		<>
+			{haveGetResult && data.data &&
+				data.data.hits.hits.map(value => {
+					<div className={styles.article} key={value._source.title}>
+						<a className={styles.article__title}>
+							{value._source.title}
+						</a>
+						<p className={styles.article__detail}>
+							{value._source.urlsource}
+						</p>
+					</div>
+				})
 			}
-		</div>
+		</>
 	)
+	// console.log( data.data.hits.hits.map(value => {
+	// 	<div className={styles.article} key={value._source.title}>
+	// 		<a className={styles.article__title}>
+	// 			{value._source.title}
+	// 		</a>
+	// 		<p className={styles.article__detail}>
+	// 			{value._source.urlsource}
+	// 		</p>
+	// 	</div>
+	// }))
 
 	const Page = (
 		<div>
@@ -91,9 +99,6 @@ function Search(props) {
 			</div>
 			{haveGetResult ? Content : <div> 正在搜索结果</div>}
 		</div>
-		// <div>
-		// 	{JSON.stringify(data)}
-		// </div>
 	)
 
 	return (Page)
