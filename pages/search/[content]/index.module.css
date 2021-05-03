@@ -1,10 +1,10 @@
-.search__header{
+.header{
     display: flex;
     min-width: 475px;
     /* flex-direction: row; */
     /* justify-content: space-between; */
 }
-.search__input{
+.input{
     flex: 1;
     display: flex;
     align-items: center;
@@ -15,18 +15,18 @@
     width:75vw;
     margin:5vh 0 0 10vw;
 }
-.search__input > input{
+.input > input{
     flex:1;
     padding: 0.5vw 2vw;
     border: none;
 	font-size: 2vh;
 }
 
-.search__input > input:focus{
+.input > input:focus{
 	outline-width: 0;
 }
 
-.search__header > button{
+.header > button{
     flex:1;
     height: 50px;
     max-width: 80px;

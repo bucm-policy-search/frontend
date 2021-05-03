@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 
-import './Modal.css'
+import modal_styles from './Modal.module.css'
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
 
@@ -64,7 +64,7 @@ export default function CustomizedDialogs() {
   };
 
   return (
-    <div className="modal">
+    <div className={modal_styles.modal}>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         关于我们
       </Button>
