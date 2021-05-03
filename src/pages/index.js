@@ -1,6 +1,5 @@
 import { EuiFlexGroup, EuiFlexItem } from '@elastic/eui'
 import React from 'react'
-import { Redirect } from 'react-router-dom'
 import SearchIcon from '@material-ui/icons/Search'
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import Button from '@material-ui/core/Button';
@@ -19,7 +18,7 @@ class Home extends React.Component {
 
 	render() {
 
-		const handleSearch = e => {
+		const handleSearch = e => {-
 			console.log('Search hit')
 			handleSubmit()
 		}
@@ -69,15 +68,15 @@ class Home extends React.Component {
 
 		console.log("redirect touch: " + redirect)
 		let e = this.state.inputValue
-		let redirect1 = (<Redirect
-			to={{
-				pathname: '/search',
-				search: '?q=' + e,
-				state: {
-					searchContent: e
-				}
-			}}
-		/>)
+		// let redirect1 = (<Redirect
+		// 	to={{
+		// 		pathname: '/search',
+		// 		search: '?q=' + e,
+		// 		state: {
+		// 			searchContent: e
+		// 		}
+		// 	}}
+		// />)
 		return (redirect === true ? redirect1 : home)
 	}
 }

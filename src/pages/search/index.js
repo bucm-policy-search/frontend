@@ -1,10 +1,11 @@
 import React from 'react'
 import qs from 'qs'
-import { Redirect } from 'react-router-dom'
+
 
 import SearchIcon from '@material-ui/icons/Search'
 import Button from '@material-ui/core/Button'
-import './Search.css'
+import './index.css'
+
 
 class Search extends React.Component {
 	constructor(props) {
@@ -62,10 +63,6 @@ class Search extends React.Component {
 	}
 
 	render() {
-		// console.log('inputValue:' + this.state.inputValue)
-		// const dataDetail = this.state.data.data && this.state.data.data.hits ? this.state.data.data.hits.hits : ''
-
-		// console.log('hits:' + this.state.haveResult? this.state.data.data: '')
 		let content = (
 			<div className="aaaa">
 				{this.state.haveResult && this.state.data.data.hits.hits.map((value) => {
@@ -105,7 +102,6 @@ class Search extends React.Component {
 			}}
 		/>)
 
-		// let tmp = ()
 		return (this.state.redirectToArticlePage ? redirect : search)
 	}
 }
