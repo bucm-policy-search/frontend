@@ -14,31 +14,32 @@ function Search(props) {
 	const { q } = router.query
 
 	const [inputValue, setInputValue] = useState(q || '')
-	// const [shouldGoArticlePage, setShouldGoArticlePage] = useState(false)
 	const [haveGetResult, setHaveGetResult] = useState(false)
 	const [data, setData] = useState(props.data)
 
 	useEffect(() => {
-		fetchData()
+		if (!haveGetResult) {
+			setHaveGetResult(true)
+			fetchData()
+
+		}
 	})
 
+	console.log('proxy_url:' + process.env.NEXT_PUBLIC_PROXY_URL)
 	const fetchData = () => {
-		let searchContent = inputValue
-		if (searchContent) {
-			let fetch_url = process.env.REACT_APP_PROXY_URL + '?q=' + searchContent
+		let fetch_url = process.env.NEXT_PUBLIC_PROXY_URL + '?q=' + inputValue
 
-			fetch(fetch_url)
-				.then(res => res.json(res))
-				.then(data => {
-					setData({ data })
-					setHaveGetResult(true)
-					console.log('successfully get data!')
-					return data
-				})
-				.catch(error => {
-					console.error('Error:', error);
-				})
-		}
+		fetch(fetch_url)
+			.then(res => res.json(res))
+			.then(data => {
+				setData({ data })
+				setHaveGetResult(true)
+				console.log(data)
+				return data
+			})
+			.catch(error => {
+				console.error('Error:', error);
+			})
 	}
 
 	const handleInputChange = e => {
@@ -46,14 +47,16 @@ function Search(props) {
 	}
 
 	const handleSearch = e => {
+		setHaveGetResult(false)
 		router.push({
-			pathname : '/search',
-			query : {
-			 q: inputValue
-			}},
-		 '/search?q='+inputValue,
-		 { shallow: true }
-		 )
+			pathname: '/search',
+			query: {
+				q: inputValue
+			}
+		},
+			'/search?q=' + inputValue,
+			{ shallow: true }
+		)
 	}
 
 	const Content = (
@@ -72,17 +75,19 @@ function Search(props) {
 
 	)
 	const Page = (
+		// <div>
+		// 	<div className={styles.header}>
+		// 		<div className={styles.input}>
+		// 			<SearchIcon className={styles.inputIcon} />
+		// 			<input value={inputValue} onChange={handleInputChange} />
+		// 		</div>
+		// 		<Button onClick={handleSearch} variant="outlined">搜索</Button>
+		// 	</div>
+		// 	{haveGetResult ? Content : <div> 正在搜索结果</div>}
+		// </div>
 		<div>
-			<div className={styles.header}>
-				<div className={styles.input}>
-					<SearchIcon className={styles.inputIcon} />
-					<input value={inputValue} onChange={handleInputChange} />
-				</div>
-				<Button onClick={handleSearch} variant="outlined">搜索</Button>
-			</div>
-			{haveGetResult ? Content : <div> 正在搜索结果</div>}
+			{JSON.stringify(data)}
 		</div>
-
 	)
 
 	return (Page)

@@ -28,11 +28,7 @@ function Home() {
 		 pathname : '/search',
 		 query : {
 			q: inputValue
-		 }},
-		 `/search?q=${inputValue}`
-		)
-		// router.push('/test')
-		// window.location('/test')
+		 }})
 	}
 
 	const handleClearContent = () => {

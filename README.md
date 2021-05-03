@@ -1,11 +1,10 @@
 ## 介绍
 前端部分使用React开发，使用技术或内容包括：
-1. [React.JS](https://reactjs.org/)和[create-react-app](https://create-react-app.dev/)。本项目的核心，用后者创建项目基础，不多说。
-2. [React-Router](https://reactrouter.com/web/guides/quick-start)。如果后期涉及多页面开发需要，用此插件。
-3. [eui](https://github.com/elastic/eui)。顾名思义，用此UI模板。
-4. [Express.js](https://expressjs.com/)做proxy。Elastic新版不能通过客户端直接连接，转向使用url类型来连接。Express在这起代理作用。
-5. 依然使用[PM2](https://pm2.keymetrics.io/docs/usage/quick-start/)让js后台运行。
-
+1. [React.JS](https://reactjs.org/)和[Next.JS](https://nextjs.org/)。本项目的核心，用后者创建项目基础，不多说。
+2. [Material-UI](https://material-ui.com/)。顾名思义，用此UI模板。
+3. [Express.js](https://expressjs.com/)做proxy。Elastic新版不能通过客户端直接连接，转向使用url类型来连接。Express在这起代理作用。
+4. 依然使用[PM2](https://pm2.keymetrics.io/docs/usage/quick-start/)让js后台运行。
+其他可见`package.json`
 
 ## 遇到的问题及解决方式
 1. 试图直接通过带用户名和密码绕过去
@@ -29,4 +28,10 @@ Error: Element type is invalid: expected a string (for built-in components) or a
 
 Check the render method of `Search`.
 
-this.setState遇见，用`[]`或`{}`包裹对应的值
+常在this.setState报错，用`[]`或`{}`包裹对应的值
+
+7. Router.push()不起作用
+表单，表单！！！不要用表单！！！ 卡了半天
+
+
+最后小小吐槽，为啥我用Node.js debug不到什么问题。。。
