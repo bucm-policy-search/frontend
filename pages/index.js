@@ -9,7 +9,6 @@ import styles from './index.module.css'
 import { useRouter } from 'next/router';
 
 function Home() {
-	// const [shouldRedirect, setShouldRedirect] = useState(false)
 	const [inputValue, setInputValue] = useState('')
 
 	const router = useRouter()
@@ -25,15 +24,15 @@ function Home() {
 	}
 
 	const handleSubmit = () => {
-		// setShouldRedirect(true)
-		
 		router.push({
 		 pathname : '/search',
 		 query : {
 			q: inputValue
 		 }},
-		'/search'
+		 `/search?q=${inputValue}`
 		)
+		// router.push('/test')
+		// window.location('/test')
 	}
 
 	const handleClearContent = () => {
@@ -44,27 +43,22 @@ function Home() {
 		<div className={styles.home}>
 			<div className={styles.home__body}>
 				<h1>中医药搜索引擎</h1>
-				<form className={styles.home__search} onSubmit={handleSubmit}>
+				<div className={styles.home__search} onSubmit={handleSubmit}>
 					<div className={styles.home__search__input}>
 						<SearchIcon className={styles.home__search__icon} onClick={handleSearch} />
 						<input value={inputValue} onChange={handleInputChange} />
 						<CloseRoundedIcon className={styles.close__icon} onClick={handleClearContent} />
 					</div>
 					<div className={styles.home__search__button}>
-						<Button variant="outlined" type="submit" onClick={handleSearch} >搜索</Button>
+						<Button variant="outlined" onClick={handleSearch}>搜索</Button>
 						<Modal />
 					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 	)
 
-	// const Redirect = redirect('/search/' + inputValue)
-
-	return (
-		// shouldRedirect === true ? Redirect : home
-		home
-	)
+	return (home)
 }
 
 export default Home

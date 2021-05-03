@@ -14,7 +14,7 @@ function Search(props) {
 	const { q } = router.query
 
 	const [inputValue, setInputValue] = useState(q || '')
-	const [shouldGoArticlePage, setShouldGoArticlePage] = useState(false)
+	// const [shouldGoArticlePage, setShouldGoArticlePage] = useState(false)
 	const [haveGetResult, setHaveGetResult] = useState(false)
 	const [data, setData] = useState(props.data)
 
@@ -46,8 +46,14 @@ function Search(props) {
 	}
 
 	const handleSearch = e => {
-		window.location.reload();
-		fetchData()
+		router.push({
+			pathname : '/search',
+			query : {
+			 q: inputValue
+			}},
+		 '/search?q='+inputValue,
+		 { shallow: true }
+		 )
 	}
 
 	const Content = (
