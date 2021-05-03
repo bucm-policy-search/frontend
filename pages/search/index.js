@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import redirect from 'nextjs-redirect'
+// import redirect from 'nextjs-redirect'
 import qs from 'qs'
+import useSWR from 'swr'
 
 import SearchIcon from '@material-ui/icons/Search'
 import Button from '@material-ui/core/Button'
 import styles from './index.module.css'
 
 
-function Search() {
+function Search(props) {
 	const router = useRouter()
-	const { content } = router.query
+	const { q } = router.query
 
-	const [inputValue, setInputValue] = useState(content)
+	const [inputValue, setInputValue] = useState(q || '')
 	const [shouldGoArticlePage, setShouldGoArticlePage] = useState(false)
 	const [haveGetResult, setHaveGetResult] = useState(false)
-	const [data, setData] = useState({})
+	const [data, setData] = useState(props.data)
 
 	useEffect(() => {
-		fetchData
+		fetchData()
 	})
 
 	const fetchData = () => {
@@ -26,13 +27,12 @@ function Search() {
 		if (searchContent) {
 			let fetch_url = process.env.REACT_APP_PROXY_URL + '?q=' + searchContent
 
-
 			fetch(fetch_url)
 				.then(res => res.json(res))
 				.then(data => {
 					setData({ data })
 					setHaveGetResult(true)
-					console.log('successful get data!')
+					console.log('successfully get data!')
 					return data
 				})
 				.catch(error => {
@@ -47,11 +47,8 @@ function Search() {
 
 	const handleSearch = e => {
 		window.location.reload();
-		fetchData
+		fetchData()
 	}
-
-
-
 
 	const Content = (
 		<div>
@@ -81,9 +78,8 @@ function Search() {
 		</div>
 
 	)
-	let Redirect = redirect('/search/' + String(inputValue))
 
-	return (shouldGoArticlePage ? Redirect : Page)
+	return (Page)
 
 }
 

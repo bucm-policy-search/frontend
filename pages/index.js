@@ -6,11 +6,13 @@ import redirect from 'nextjs-redirect'
 
 import Modal from '../components/Modal'
 import styles from './index.module.css'
+import { useRouter } from 'next/router';
 
 function Home() {
-	const [shouldRedirect, setShouldRedirect] = useState(false)
+	// const [shouldRedirect, setShouldRedirect] = useState(false)
 	const [inputValue, setInputValue] = useState('')
 
+	const router = useRouter()
 
 	const handleSearch = e => {
 		console.log('Search hit')
@@ -22,9 +24,16 @@ function Home() {
 		console.log('inputValue:' + inputValue)
 	}
 
-	const handleSubmit = e => {
-		setShouldRedirect(true)
-		console.log("this state:" + e)
+	const handleSubmit = () => {
+		// setShouldRedirect(true)
+		
+		router.push({
+		 pathname : '/search',
+		 query : {
+			q: inputValue
+		 }},
+		'/search'
+		)
 	}
 
 	const handleClearContent = () => {
@@ -50,10 +59,11 @@ function Home() {
 		</div>
 	)
 
-	const Redirect = redirect('/search/' + inputValue)
+	// const Redirect = redirect('/search/' + inputValue)
 
 	return (
-		shouldRedirect === true ? Redirect : home
+		// shouldRedirect === true ? Redirect : home
+		home
 	)
 }
 
