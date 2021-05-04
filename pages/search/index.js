@@ -15,7 +15,7 @@ function Search(props) {
 	console.log('q:' + q)
 	const [inputValue, setInputValue] = useState(q ? q : '')
 	const [haveFetchData, setHaveFetchData] = useState(false)
-	const [haveGetResult, setHaveGetResult] = useState(false)
+	const [haveGotResult, setHaveGotResult] = useState(false)
 	const [data, setData] = useState({})
 
 	useEffect(() => {
@@ -24,6 +24,9 @@ function Search(props) {
 			console.log('fetchResult now')
 			fetchData()
 			setHaveFetchData(true)
+
+
+
 		}
 	})
 
@@ -34,9 +37,9 @@ function Search(props) {
 		fetch(fetch_url)
 			.then(res => res.json())
 			.then(data => {
-				setData({ data })
-				console.log({ data })
-				setHaveGetResult(true)
+				setData(data)
+				console.log(data)
+				setHaveGotResult(true)
 			})
 			.catch(error => {
 				console.error('Error:', error);
@@ -49,7 +52,7 @@ function Search(props) {
 
 	const handleSearch = e => {
 		setHaveFetchData(false)
-		setHaveGetResult(false)
+		setHaveGotResult(false)
 		router.push({
 			pathname: '/search',
 			query: {
@@ -63,41 +66,40 @@ function Search(props) {
 
 	const Content = (
 		<>
-			{haveGetResult && data.data &&
-				data.data.hits.hits.map(value => {
-					<div className={styles.article} key={value._source.title}>
-						<a className={styles.article__title}>
-							{value._source.title}
-						</a>
-						<p className={styles.article__detail}>
-							{value._source.urlsource}
-						</p>
-					</div>
-				})
+			{haveGotResult && data.hits &&
+				<div className={styles.body}>
+					{data.hits.hits.map(value => {
+						return (
+							<div className={styles.article} key={value._source.title}>
+								<a className={styles.article__title} href={value._source.urlsource}>
+									{value._source.title}
+								</a>
+								<p className={styles.article__detail}>
+									{value._source.article}
+								</p>
+							</div>
+						)
+					})
+					}
+				</div>
 			}
 		</>
 	)
-	// console.log( data.data.hits.hits.map(value => {
-	// 	<div className={styles.article} key={value._source.title}>
-	// 		<a className={styles.article__title}>
-	// 			{value._source.title}
-	// 		</a>
-	// 		<p className={styles.article__detail}>
-	// 			{value._source.urlsource}
-	// 		</p>
-	// 	</div>
-	// }))
+
 
 	const Page = (
 		<div>
 			<div className={styles.header}>
+				<h1 className={styles.h1}>搜索引擎</h1>
 				<div className={styles.input}>
 					<SearchIcon className={styles.inputIcon} />
 					<input value={inputValue} onChange={handleInputChange} />
 				</div>
 				<Button onClick={handleSearch} variant="outlined">搜索</Button>
 			</div>
-			{haveGetResult ? Content : <div> 正在搜索结果</div>}
+			{haveGotResult ?
+				
+			Content	: <div className={styles.body}> 正在搜索结果</div>}
 		</div>
 	)
 
