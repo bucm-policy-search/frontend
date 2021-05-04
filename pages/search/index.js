@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { useRouter } from 'next/router'
 // import redirect from 'nextjs-redirect'
 import qs from 'qs'
@@ -14,19 +14,35 @@ function Search(props) {
 
 	console.log('q:' + q)
 	const [inputValue, setInputValue] = useState(q ? q : '')
-	const [haveFetchData, setHaveFetchData] = useState(false)
+	const [haveFetchedData, setHaveFetchedData] = useState(false)
 	const [haveGotResult, setHaveGotResult] = useState(false)
 	const [data, setData] = useState({})
 
 	useEffect(() => {
 		console.log('inputValue:' + inputValue)
-		if (!haveFetchData && q) {
+		if (!haveFetchedData && q) {
 			console.log('fetchResult now')
 			fetchData()
-			setHaveFetchData(true)
+			setHaveFetchedData(true)
 		}
 	})
 
+	function highLightKeyword(content, data) {
+		let hits = data.hits.hits
+		let highted_data = hits.map(hitOne => {
+			let initArticle = hitOne._source.article
+			let newArticle = initArticle.replace(new RegExp(content, 'g'), `<span class="{styles.keyword-match}">${content}</span>`)
+			// change "<" to "&lt;" 
+			newArticle = newArticle.replace(new RegExp('<', 'g'), "&lt;")
+			newArticle = newArticle.replace(new RegExp('>', 'g'), "&gt;")
+			hitOne._source.article = newArticle
+			return hitOne
+		})
+		data.hits.hits = highted_data
+		console.log("hightKeyword_data:")
+		console.log(data)
+		return data
+	}
 
 	const fetchData = () => {
 		let fetch_url = process.env.NEXT_PUBLIC_PROXY_URL + '?q=' + String(inputValue ? inputValue : q)
@@ -34,8 +50,11 @@ function Search(props) {
 		fetch(fetch_url)
 			.then(res => res.json())
 			.then(data => {
+				let newData = highLightKeyword(inputValue, data)
+				return newData
+			})
+			.then(data => {
 				setData(data)
-				console.log(data)
 				setHaveGotResult(true)
 			})
 			.catch(error => {
@@ -48,7 +67,7 @@ function Search(props) {
 	}
 
 	const handleSearch = e => {
-		setHaveFetchData(false)
+		setHaveFetchedData(false)
 		setHaveGotResult(false)
 		router.push({
 			pathname: '/search',
@@ -61,9 +80,11 @@ function Search(props) {
 		)
 	}
 
+
+
 	const Content = (
 		<>
-			{haveGotResult && data.hits &&
+			{haveGotResult && data.hits.hits &&
 				<div className={styles.body}>
 					{data.hits.hits.map(value => {
 						return (
@@ -71,9 +92,9 @@ function Search(props) {
 								<a className={styles.article__title} href={value._source.urlsource}>
 									{value._source.title}
 								</a>
-								<p className={styles.article__detail}>
-									{value._source.article}
-								</p>
+								<div className={styles.article__detail}>
+										{value._source.article}
+								</div>
 							</div>
 						)
 					})
@@ -95,8 +116,8 @@ function Search(props) {
 				<Button onClick={handleSearch} variant="outlined">搜索</Button>
 			</div>
 			{haveGotResult ?
-				
-			Content	: <div className={styles.body}> 正在搜索结果</div>}
+
+				Content : <div className={styles.body}> 正在搜索结果</div>}
 		</div>
 	)
 

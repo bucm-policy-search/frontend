@@ -9,7 +9,7 @@
 .h1 {
   font-size: 2vh;
   height: 20px;
-  margin-left: 5vw;
+  margin-left: vw;
 }
 
 .input {
@@ -46,8 +46,9 @@
 
 .body {
   font-size: 1em;
-  margin-left: 5vw;
+  margin-left: 15vw;
   margin-top: 5vh;
+  margin-right: 15vw;
 }
 
 .article {
@@ -61,4 +62,9 @@
 
 .article__detail {
   font-weight: lighter;
+  margin-top: 2vh;
+}
+
+.article__detail .keyword-match{
+  color: red;
 }
