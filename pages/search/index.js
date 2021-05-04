@@ -24,9 +24,6 @@ function Search(props) {
 			console.log('fetchResult now')
 			fetchData()
 			setHaveFetchData(true)
-
-
-
 		}
 	})
 
