@@ -23,7 +23,7 @@ function Home() {
 	}
 
 	const handleSubmit = () => {
-		event.preventDefault()
+		event.preventDefault() // ignore the ts's deprecated warning, it still works now
 		router.push({
 			pathname: '/search',
 			query: {

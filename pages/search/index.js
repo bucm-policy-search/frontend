@@ -35,6 +35,7 @@ function Search(props) {
 			.then(res => res.json())
 			.then(data => {
 				setData(data)
+				console.log(data)
 				setHaveGotResult(true)
 			})
 			.catch(error => {
@@ -47,6 +48,7 @@ function Search(props) {
 	}
 
 	const handleSearch = e => {
+		event.preventDefault() // ignore the ts's deprecated warning, it still works now
 		setHaveFetchedData(false)
 		setHaveGotResult(false)
 		router.push({
@@ -86,14 +88,14 @@ function Search(props) {
 
 	const Page = (
 		<div>
-			<div className={styles.header}>
+			<form className={styles.header} onSubmit={handleSearch}>
 				<h1 className={styles.h1}>搜索引擎</h1>
 				<div className={styles.input}>
 					<SearchIcon className={styles.inputIcon} />
 					<input value={inputValue} onChange={handleInputChange} />
 				</div>
-				<Button onClick={handleSearch} variant="outlined">搜索</Button>
-			</div>
+				<Button type="submit" variant="outlined">搜索</Button>
+			</form>
 			{haveGotResult ?
 				Content : <div className={styles.body}> 正在搜索结果</div>}
 		</div>
