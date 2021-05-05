@@ -37,31 +37,30 @@ function Search() {
 			})
 	}
 
-
-
-
 	const Content = (
 		<>
 			{haveGotResult && data.hits.hits &&
 				<div className={styles.body}>
+
+					{/* only have one element, but to simplify the development, just C-V from 'search.js' */}
 					{data.hits.hits.map(value => {
 
 						// To set img src url from relative to absolute
 						// replace element attributes : https://github.com/remarkablemark/html-react-parser#replace-element-attributes
 						function relative_To_Absolute(base, relative) {
-							var stack = base.split("/"),
-								parts = relative.split("/");
+							let stack = base.split("/")
+							let parts = relative.split("/")
 							stack.pop(); // remove current file name (or empty string)
 							// (omit if "base" is the current folder without trailing slash)
-							for (var i = 0; i < parts.length; i++) {
+							for (let i = 0; i < parts.length; i++) {
 								if (parts[i] == ".")
-									continue;
+									continue
 								if (parts[i] == "..")
-									stack.pop();
+									stack.pop()
 								else
-									stack.push(parts[i]);
+									stack.push(parts[i])
 							}
-							return stack.join("/");
+							return stack.join("/")
 						}
 
 						const options = {
@@ -78,15 +77,26 @@ function Search() {
 
 						return (
 							<div className={styles.article} key={value._source.title}>
-								<h1 className={styles.article__title}>
+								<h1 className={styles.title}>
 									{value._source.title}
 								</h1>
-								<p className={styles.article__source}>
+								<p className={styles.source}>
 									原文地址：<a href={value._source.urlsource}>{value._source.urlsource}</a>
 								</p>
-								<div className={styles.article__detail}>
+								<div className={styles.detail}>
 									{
 										parse(value._source.article, options)
+									}
+								</div>
+								<div className={styles.attachments}>
+									{
+										value._source.attachment.map((value, index) => {
+											return (
+												<div className={styles.attachment} key={value.link}>
+													附件{index + 1}：<a href={value.link}>{value.mark}</a>
+												</div>
+											)
+										})
 									}
 								</div>
 							</div>

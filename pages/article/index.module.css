@@ -1,22 +1,25 @@
 .body {
-  font-size: 1em;
+  font-size: 2vh;
   margin: 5vh 15vw 15vh 15vw;
 }
 
-.article {
-  font-size: 2vh;
-  margin-top: 5vh;
-}
-
-.article__title {
+.title {
   font-weight: bold;
 }
 
-.article__source{
+.source{
   font-size: 1.5vh;
 }
 
-.article__detail {
+.detail {
   font-weight: lighter;
   margin-top: 7vh;
+}
+
+.attachments{
+  margin-top: 5vh;
+}
+
+.attachment{
+  margin-top: 1vh;
 }

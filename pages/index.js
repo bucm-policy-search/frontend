@@ -23,37 +23,25 @@ function Home() {
 	}
 
 	const handleSubmit = () => {
-		event.preventDefault() // ignore the ts's deprecated warning, it still works now
+		// ignore the ts's event deprecated warning, it still works now(2021/05/05)
+		// remove "event.preventDefault()" will cause page redirect bug when use form 
+		event.preventDefault() 
 		router.push({
 			pathname: '/search',
 			query: {
 				q: inputValue
 			}
 		},
-			`/search?q=${inputValue}`,
-			{
-				shallow: true
-			}
+			`/search?q=${inputValue}&page=1`,
+			// {
+			// 	shallow: true
+			// }
 		)
 	}
 
 	const handleClearContent = () => {
 		setInputValue('')
 	}
-
-	// function Form() {
-	// 	<form className={styles.home__search} onSubmit={handleSubmit}>
-	// 		<div className={styles.home__search__input}>
-	// 			<SearchIcon className={styles.home__search__icon} onClick={handleSearch} />
-	// 			<input value={inputValue} onChange={handleInputChange} />
-	// 			<CloseRoundedIcon className={styles.close__icon} onClick={handleClearContent} />
-	// 		</div>
-	// 		<div className={styles.home__search__button}>
-	// 			<Button variant="outlined" onClick={handleSearch}>搜索</Button>
-	// 			<Modal />
-	// 		</div>
-	// 	</form>
-	// }
 
 	let home = (
 		<div className={styles.home}>
@@ -73,7 +61,6 @@ function Home() {
 			</div>
 		</div>
 	)
-
 	return (home)
 }
 

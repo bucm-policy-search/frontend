@@ -1,6 +1,9 @@
+.page{
+  min-width: 475px;
+}
+
 .header {
   display: flex;
-  min-width: 475px;
   margin-top: 5vh;
   margin-left: 3vw;
 }
@@ -45,7 +48,11 @@
 
 .body {
   font-size: 1em;
-  margin: 5vh 15vw 15vh 15vw;
+  margin: 2vh 15vw 15vh 15vw;
+}
+
+.hits_num{
+  margin-bottom: 5vh;
 }
 
 .article {
@@ -61,10 +68,15 @@
 
 .article__detail {
   font-weight: lighter;
-  margin-top: 2vh;
+
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3; /* number of lines to show */
   -webkit-box-orient: vertical;
+}
+
+.page_num{
+  display: flex;
+  margin: 5vh 30vw 10vh 30vw;
 }

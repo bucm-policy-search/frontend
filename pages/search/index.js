@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Children } from 'react'
 import { useRouter } from 'next/router'
-import Parser from 'html-react-parser'
+import Image from 'next/image'
+import parse, { attributesToProps, domToReact } from 'html-react-parser'
 
 import SearchIcon from '@material-ui/icons/Search'
 import Button from '@material-ui/core/Button'
@@ -60,19 +61,65 @@ function Search() {
 		)
 	}
 
+	function getTotalPage() {
+		let pageDom = ""
+		if (data.hits) {
+			for (let i = 1; i <= Math.ceil(data.hits.total.value / 10); i++) {
+				if (i == q) {
+					pageDom += `<div>${i}</div>`
+				} else {
+					pageDom += `<div><a href="http://localhost:3000/search?q=${q}"&page=${i}>${i}</a></div>`
+				}
+			}
+
+		}
+	}
+
+
 
 	const Content = (
 		<>
 			{haveGotResult && data.hits.hits &&
 				<div className={styles.body}>
+					<div className={styles.hits_num}>共搜索到{data.hits.total.value}条搜索结果</div>
 					{data.hits.hits.map(value => {
+
+						const options = {
+							replace: (domNode) => {
+								if (!domNode)
+									return
+								// remove img tag and its descendant
+								if (domNode.name === 'img')
+									return <></>;
+								if (domNode.name === 'table')
+									return <></>;
+
+								
+								// TODO: remove all the attributes in web scraping
+
+								// Comment it to speed up  
+								if (domNode.name === 'span') {
+									return (
+										<span>
+											{domToReact(domNode.children, options)}
+										</span>
+									)
+								}
+
+							}
+
+						}
 						return (
 							<div className={styles.article} key={value._source.title}>
 								<a className={styles.article__title} href={`/article?q=${value._source.title}`}>
 									{value._source.title}
 								</a>
 								<div className={styles.article__detail}>
-										{Parser(value._source.article)}
+									{
+										// https://github.com/remarkablemark/html-react-parser#replace
+										// https://github.com/remarkablemark/html-react-parser#replace-and-remove-element
+										parse(value._source.article, options)
+									}
 								</div>
 							</div>
 						)
@@ -83,11 +130,20 @@ function Search() {
 		</>
 	)
 
+	const PageNum = (
+		haveGotResult && data.hits
+	)
+
 
 	const Page = (
-		<div>
+		<div className={styles.page}>
 			<form className={styles.header} onSubmit={handleSearch}>
+				<a href="..">
+				{/* Next.js pic is strange, just ignore */}
+				{/* <Image className={styles.pic} alt="图片加载中..." src='/seach-icon.jpg' width={80} height={60} /> */}
 				<h1 className={styles.h1}>搜索引擎</h1>
+				</a>
+				
 				<div className={styles.input}>
 					<SearchIcon className={styles.inputIcon} />
 					<input value={inputValue} onChange={handleInputChange} />
@@ -95,7 +151,12 @@ function Search() {
 				<Button type="submit" variant="outlined">搜索</Button>
 			</form>
 			{haveGotResult ?
-				Content : <div className={styles.body}> 正在搜索结果</div>}
+				Content : <div className={styles.body}>正在搜索结果</div>}
+			<div className={styles.page_num}>
+				{
+
+				}
+			</div>
 		</div>
 	)
 
