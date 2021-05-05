@@ -30,7 +30,7 @@ function Search() {
 	const fetchData = (kind) => {
 		let fetch_url = `${process.env.NEXT_PUBLIC_PROXY_URL}/api/${kind}?q=${String(inputValue ? inputValue : q)}&page=${page}`
 		console.log(fetch_url)
-		
+
 		fetch(fetch_url)
 			.then(res => res.json())
 			.then(data => {
@@ -83,13 +83,28 @@ function Search() {
 		return components
 	}
 
+	function highlightPhrases(value) {
+		console.log("highlightPhrases Value:")
+		console.log(value)
+		let result = []
+		if (value.highlight && value.highlight.article) {
+			result = value.highlight.article.map(highlightPhrase => {
+				return <span>{parse(highlightPhrase+"...")}</span>
+				console.log("highlightPhrases:" + highlightPhrase)
+			})
+		}
+		console.log("highlightResult:")
+		console.log(result)
+		return result
+	}
+
 
 
 	const Content = (
 		<>
 			{haveGotResult && data.hits.hits &&
 				<div className={styles.body}>
-					<div className={styles.hits_num}>共搜索到{data.hits.total.value}条结果</div>
+					<div className={styles.hits_num}>共搜索到 {data.hits.total.value} 条结果</div>
 					{data.hits.hits.map(value => {
 
 						const options = {
@@ -122,9 +137,7 @@ function Search() {
 								</a>
 								<div className={styles.article__detail}>
 									{
-										// https://github.com/remarkablemark/html-react-parser#replace
-										// https://github.com/remarkablemark/html-react-parser#replace-and-remove-element
-										parse(value._source.article, options)
+										highlightPhrases(value)
 									}
 								</div>
 							</div>
