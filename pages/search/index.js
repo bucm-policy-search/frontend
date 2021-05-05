@@ -10,8 +10,8 @@ import styles from './index.module.css'
 function Search() {
 	const router = useRouter()
 	const { q } = router.query
+	const { page } = router.query
 
-	console.log('q:' + q)
 	const [inputValue, setInputValue] = useState(q ? q : '')
 	const [haveFetchedData, setHaveFetchedData] = useState(false)
 	const [haveGotResult, setHaveGotResult] = useState(false)
@@ -28,7 +28,7 @@ function Search() {
 
 
 	const fetchData = () => {
-		let fetch_url = process.env.NEXT_PUBLIC_PROXY_URL + '?q=' + String(inputValue ? inputValue : q)
+		let fetch_url = `${process.env.NEXT_PUBLIC_PROXY_URL}?q=${String(inputValue ? inputValue : q)}&page=${page}`
 		console.log('proxy_url:' + process.env.NEXT_PUBLIC_PROXY_URL + '?q=' + String(inputValue ? inputValue : q))
 		fetch(fetch_url)
 			.then(res => res.json())
@@ -53,26 +53,33 @@ function Search() {
 		router.push({
 			pathname: '/search',
 			query: {
-				q: inputValue
+				q: inputValue,
+				page: page
 			}
 		},
-			'/search?q=' + inputValue,
+			`/search?q=${inputValue}&page=${page}`,
 			{ shallow: true }
 		)
 	}
 
-	function getTotalPage() {
-		let pageDom = ""
+	function PageNum() {
+		let components = []
 		if (data.hits) {
 			for (let i = 1; i <= Math.ceil(data.hits.total.value / 10); i++) {
-				if (i == q) {
-					pageDom += `<div>${i}</div>`
-				} else {
-					pageDom += `<div><a href="http://localhost:3000/search?q=${q}"&page=${i}>${i}</a></div>`
-				}
+				let url = `http://localhost:3000/search?q=${q}&page=${i}`
+				console.log('i==page:' + page)
+				components[i] = (i == page) ?
+					(
+						<div className={styles.page_num}>{i}</div>
+					) :
+					(
+						<div className={styles.page_num}>
+							<a href={url}>{i}</a>
+						</div>
+					)
 			}
-
 		}
+		return components
 	}
 
 
@@ -93,11 +100,10 @@ function Search() {
 									return <></>;
 								if (domNode.name === 'table')
 									return <></>;
-
 								
+								// TODO !
 								// TODO: remove all the attributes in web scraping
-
-								// Comment it to speed up  
+								// Comment it to speed up
 								if (domNode.name === 'span') {
 									return (
 										<span>
@@ -105,10 +111,9 @@ function Search() {
 										</span>
 									)
 								}
-
 							}
-
 						}
+						
 						return (
 							<div className={styles.article} key={value._source.title}>
 								<a className={styles.article__title} href={`/article?q=${value._source.title}`}>
@@ -130,20 +135,16 @@ function Search() {
 		</>
 	)
 
-	const PageNum = (
-		haveGotResult && data.hits
-	)
-
 
 	const Page = (
 		<div className={styles.page}>
 			<form className={styles.header} onSubmit={handleSearch}>
 				<a href="..">
-				{/* Next.js pic is strange, just ignore */}
-				{/* <Image className={styles.pic} alt="图片加载中..." src='/seach-icon.jpg' width={80} height={60} /> */}
-				<h1 className={styles.h1}>搜索引擎</h1>
+					{/* Next.js pic is strange, just ignore */}
+					{/* <Image className={styles.pic} alt="图片加载中..." src='/seach-icon.jpg' width={80} height={60} /> */}
+					<h1 className={styles.h1}>搜索引擎</h1>
 				</a>
-				
+
 				<div className={styles.input}>
 					<SearchIcon className={styles.inputIcon} />
 					<input value={inputValue} onChange={handleInputChange} />
@@ -152,10 +153,8 @@ function Search() {
 			</form>
 			{haveGotResult ?
 				Content : <div className={styles.body}>正在搜索结果</div>}
-			<div className={styles.page_num}>
-				{
-
-				}
+			<div className={styles.page_nums}>
+				<strong>当前页数：</strong>{PageNum()}
 			</div>
 		</div>
 	)

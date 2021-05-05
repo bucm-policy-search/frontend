@@ -48,7 +48,7 @@
 
 .body {
   font-size: 1em;
-  margin: 2vh 15vw 15vh 15vw;
+  margin: 2vh 15vw 10vh 15vw;
 }
 
 .hits_num{
@@ -76,7 +76,13 @@
   -webkit-box-orient: vertical;
 }
 
-.page_num{
+.page_nums{
   display: flex;
-  margin: 5vh 30vw 10vh 30vw;
+  flex-direction: row;
+  margin: 10vh 15vw 10vh 15vw;
+  font-size: 2vh;
+}
+
+.page_num{
+  margin-left: 2vw;
 }

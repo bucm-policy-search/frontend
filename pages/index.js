@@ -29,7 +29,8 @@ function Home() {
 		router.push({
 			pathname: '/search',
 			query: {
-				q: inputValue
+				q: inputValue,
+				page: 1
 			}
 		},
 			`/search?q=${inputValue}&page=1`,
