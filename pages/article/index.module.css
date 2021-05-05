@@ -39,7 +39,7 @@
   flex: 1;
   height: 50px;
   max-width: 80px;
-  margin: 0vh 10vw 0vh 3vw;
+  margin: 0vh 7vw 0vh 3vw;
   border-radius: 1vh;
   /* margin-left: 10vw; */
 }
@@ -52,8 +52,6 @@
 .article {
   font-size: 2vh;
   margin-top: 4vh;
-  max-height: 400px;
-  overflow: hidden;
 }
 
 .article__title {
@@ -63,9 +61,4 @@
 .article__detail {
   font-weight: lighter;
   margin-top: 2vh;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* number of lines to show */
-  -webkit-box-orient: vertical;
 }

@@ -86,14 +86,6 @@ function Search(props) {
 
 	const Page = (
 		<div>
-			<form className={styles.header} onSubmit={handleSearch}>
-				<h1 className={styles.h1}>搜索引擎</h1>
-				<div className={styles.input}>
-					<SearchIcon className={styles.inputIcon} />
-					<input value={inputValue} onChange={handleInputChange} />
-				</div>
-				<Button type="submit" variant="outlined">搜索</Button>
-			</form>
 			{haveGotResult ?
 				Content : <div className={styles.body}> 正在搜索结果</div>}
 		</div>
