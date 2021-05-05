@@ -21,15 +21,16 @@ function Search() {
 		console.log('inputValue:' + inputValue)
 		if (!haveFetchedData && q) {
 			console.log('fetchResult now')
-			fetchData()
+			fetchData('search')
 			setHaveFetchedData(true)
 		}
 	})
 
 
-	const fetchData = () => {
-		let fetch_url = `${process.env.NEXT_PUBLIC_PROXY_URL}?q=${String(inputValue ? inputValue : q)}&page=${page}`
-		console.log('proxy_url:' + process.env.NEXT_PUBLIC_PROXY_URL + '?q=' + String(inputValue ? inputValue : q))
+	const fetchData = (kind) => {
+		let fetch_url = `${process.env.NEXT_PUBLIC_PROXY_URL}/api/${kind}?q=${String(inputValue ? inputValue : q)}&page=${page}`
+		console.log(fetch_url)
+		
 		fetch(fetch_url)
 			.then(res => res.json())
 			.then(data => {
@@ -88,7 +89,7 @@ function Search() {
 		<>
 			{haveGotResult && data.hits.hits &&
 				<div className={styles.body}>
-					<div className={styles.hits_num}>共搜索到{data.hits.total.value}条搜索结果</div>
+					<div className={styles.hits_num}>共搜索到{data.hits.total.value}条结果</div>
 					{data.hits.hits.map(value => {
 
 						const options = {
@@ -100,7 +101,7 @@ function Search() {
 									return <></>;
 								if (domNode.name === 'table')
 									return <></>;
-								
+
 								// TODO !
 								// TODO: remove all the attributes in web scraping
 								// Comment it to speed up
@@ -113,10 +114,10 @@ function Search() {
 								}
 							}
 						}
-						
+
 						return (
 							<div className={styles.article} key={value._source.title}>
-								<a className={styles.article__title} href={`/article?q=${value._source.title}`}>
+								<a className={styles.article__title} href={`/article?q=${String(value._source.title)}`}>
 									{value._source.title}
 								</a>
 								<div className={styles.article__detail}>

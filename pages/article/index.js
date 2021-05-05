@@ -16,15 +16,15 @@ function Search() {
 	useEffect(() => {
 		if (!haveFetchedData && q) {
 			console.log('fetchResult now')
-			fetchData()
+			fetchData('article')
 			setHaveFetchedData(true)
 		}
 	})
 
 
-	const fetchData = () => {
-		let fetch_url = process.env.NEXT_PUBLIC_PROXY_URL + '?q=' + String(q)
-		console.log('proxy_url:' + process.env.NEXT_PUBLIC_PROXY_URL + '?q=' + String(q))
+	const fetchData = (kind) => {
+		let fetch_url = `${process.env.NEXT_PUBLIC_PROXY_URL}/api/${kind}?q=${String(q)}`
+		console.log(`${process.env.NEXT_PUBLIC_PROXY_URL}/api/${kind}?q=${String(q)}`)
 		fetch(fetch_url)
 			.then(res => res.json())
 			.then(data => {
@@ -113,7 +113,7 @@ function Search() {
 		<div>
 			{haveGotResult ?
 				Content :
-				<div className={styles.body}>正在获取信息</div>}
+				<div className={styles.body}>正在获取信息...</div>}
 		</div>
 	)
 

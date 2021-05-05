@@ -33,10 +33,7 @@ function Home() {
 				page: 1
 			}
 		},
-			`/search?q=${inputValue}&page=1`,
-			// {
-			// 	shallow: true
-			// }
+			`/search?q=${inputValue}&page=1`
 		)
 	}
 
