@@ -27,32 +27,12 @@ function Search(props) {
 		}
 	})
 
-	function highLightKeyword(content, data) {
-		let hits = data.hits.hits
-		let highted_data = hits.map(hitOne => {
-			let initArticle = hitOne._source.article
-			let newArticle = initArticle.replace(new RegExp(content, 'g'), `<span class="{styles.keyword-match}">${content}</span>`)
-			// change "<" to "&lt;" 
-			newArticle = newArticle.replace(new RegExp('<', 'g'), "&lt;")
-			newArticle = newArticle.replace(new RegExp('>', 'g'), "&gt;")
-			hitOne._source.article = newArticle
-			return hitOne
-		})
-		data.hits.hits = highted_data
-		console.log("hightKeyword_data:")
-		console.log(data)
-		return data
-	}
 
 	const fetchData = () => {
 		let fetch_url = process.env.NEXT_PUBLIC_PROXY_URL + '?q=' + String(inputValue ? inputValue : q)
 		console.log('proxy_url:' + process.env.NEXT_PUBLIC_PROXY_URL + '?q=' + String(inputValue ? inputValue : q))
 		fetch(fetch_url)
 			.then(res => res.json())
-			.then(data => {
-				let newData = highLightKeyword(inputValue, data)
-				return newData
-			})
 			.then(data => {
 				setData(data)
 				setHaveGotResult(true)
