@@ -2,8 +2,7 @@
   display: flex;
   min-width: 475px;
   margin-top: 5vh;
-  /* flex-direction: row; */
-  /* justify-content: space-between; */
+  margin-left: 3vw;
 }
 
 .h1 {

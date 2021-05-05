@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Parser from 'html-react-parser'
 
@@ -6,7 +6,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import Button from '@material-ui/core/Button'
 import styles from './index.module.css'
 
-function Search(props) {
+function Search() {
 	const router = useRouter()
 	const { q } = router.query
 
