@@ -61,7 +61,6 @@ function Search(props) {
 	}
 
 
-
 	const Content = (
 		<>
 			{haveGotResult && data.hits.hits &&
@@ -96,7 +95,6 @@ function Search(props) {
 				<Button onClick={handleSearch} variant="outlined">搜索</Button>
 			</div>
 			{haveGotResult ?
-
 				Content : <div className={styles.body}> 正在搜索结果</div>}
 		</div>
 	)

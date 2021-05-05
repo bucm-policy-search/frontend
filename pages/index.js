@@ -23,6 +23,7 @@ function Home() {
 	}
 
 	const handleSubmit = () => {
+		event.preventDefault()
 		router.push({
 			pathname: '/search',
 			query: {
@@ -65,7 +66,7 @@ function Home() {
 						<CloseRoundedIcon className={styles.close__icon} onClick={handleClearContent} />
 					</div>
 					<div className={styles.home__search__button}>
-						<Button variant="outlined" type="submit" onSubmit={handleSearch}>搜索</Button>
+						<Button variant="outlined" type="submit" >搜索</Button>
 						<Modal />
 					</div>
 				</form>
