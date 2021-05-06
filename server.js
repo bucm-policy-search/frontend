@@ -67,7 +67,7 @@ app.prepare()
           .then(body => {
             res.set({
               "Access-Control-Allow-Origin": "http://localhost:3000",
-              "Access-Control-Allow-Methods": "GET, PUT, PATCH, POST, DELETE",
+              "Access-Control-Allow-Methods": "GET, POST",
               "Access-Control-Allow-Headers": "Content-Type, x-requested-with"
             })
             res.send(body)
@@ -107,7 +107,7 @@ app.prepare()
           .then(body => {
             res.set({
               "Access-Control-Allow-Origin": "http://localhost:3000",
-              "Access-Control-Allow-Methods": "GET, PUT, PATCH, POST, DELETE",
+              "Access-Control-Allow-Methods": "GET, POST",
               "Access-Control-Allow-Headers": "Content-Type, x-requested-with"
             })
             res.send(body)
