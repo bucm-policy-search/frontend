@@ -69,7 +69,7 @@ function Search() {
 									const props = attributesToProps(domNode.attribs)
 									console.log("options_url:")
 									console.log(props.src)
-									props.src = relative_To_Absolute(value._source.urlsource, props.src)
+									props.src = relative_To_Absolute(value._source.urlSource, props.src)
 									return <img {...props} />
 								}
 							}
@@ -81,7 +81,7 @@ function Search() {
 									{value._source.title}
 								</h1>
 								<p className={styles.source}>
-									原文地址：<a href={value._source.urlsource}>{value._source.urlsource}</a>
+									原文地址：<a href={value._source.urlSource}>{value._source.urlSource}</a>
 								</p>
 								<div className={styles.detail}>
 									{

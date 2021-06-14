@@ -1,7 +1,7 @@
-import React, { useState, useEffect, Children } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import parse, { attributesToProps, domToReact } from 'html-react-parser'
+import parse from 'html-react-parser'
 
 import SearchIcon from '@material-ui/icons/Search'
 import Button from '@material-ui/core/Button'
@@ -87,10 +87,9 @@ function Search() {
 		console.log("highlightPhrases Value:")
 		console.log(value)
 		let result = []
-		if (value.highlight && value.highlight.article) {
-			result = value.highlight.article.map(highlightPhrase => {
-				return <span>{parse(highlightPhrase+"...")}</span>
-				console.log("highlightPhrases:" + highlightPhrase)
+		if (value.highlight && value.highlight.plaintext) {
+			result = value.highlight.plaintext.map(highlightPhrase => {
+				return <span>{parse(highlightPhrase + "...")}</span>
 			})
 		}
 		console.log("highlightResult:")
@@ -98,37 +97,12 @@ function Search() {
 		return result
 	}
 
-
-
 	const Content = (
 		<>
 			{haveGotResult && data.hits.hits &&
 				<div className={styles.body}>
 					<div className={styles.hits_num}>共搜索到 {data.hits.total.value} 条结果</div>
 					{data.hits.hits.map(value => {
-
-						const options = {
-							replace: (domNode) => {
-								if (!domNode)
-									return
-								// remove img tag and its descendant
-								if (domNode.name === 'img')
-									return <></>;
-								if (domNode.name === 'table')
-									return <></>;
-
-								// TODO !
-								// TODO: remove all the attributes in web scraping
-								// Comment it to speed up
-								if (domNode.name === 'span') {
-									return (
-										<span>
-											{domToReact(domNode.children, options)}
-										</span>
-									)
-								}
-							}
-						}
 
 						return (
 							<div className={styles.article} key={value._source.title}>
