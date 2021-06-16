@@ -1,61 +1,55 @@
+/* eslint-disable react/prop-types */
 import { EuiFieldSearch } from '@elastic/eui';
-import React from 'react'
-import { Redirect } from "react-router-dom";
+import React from 'react';
 
-import './SearchBox.css'
+import './SearchBox.css';
 
 export default class SearchBox extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       value: '',
-      isClearable: '',
-      redirect: false,
-      searchContent: '',
-      firstInit: true
-    }
+      firstInit: true,
+    };
   }
 
   componentDidUpdate(prevState) {
-    if (this.state.value !== prevState.value && this.state.firstInit){
-      this.setState({
-        firstInit: false
-      })
-    }
+    const { value, firstInit } = this.state;
+    this.onUpdate(function callback() {
+      if (value !== prevState.value && firstInit) {
+        this.setState({
+          firstInit: false,
+        });
+      }
+    });
   }
 
   render() {
-    let isClearable = true
-    let onChange = e => {
+    const isClearable = true;
+    const { value } = this.props;
+    const onChange = (e) => {
       this.setState({
-        value: e.target.value
-      })
-    }
-    let onSearch = searchContent => {
-      this.setState({
-        redirect: true,
-        searchContent: searchContent
-      })
-      this.props.handleUpdateData(this.state.searchContent)
-    }
-    let searchBox = (
+        value: e.target.value,
+      });
+    };
+
+    const searchBox = (
       <EuiFieldSearch
         placeholder="搜索"
-        value={this.state.firstInit ? this.props.value : this.state.value}
+        value={value}
         isClearable={isClearable}
         incremental={Boolean(0)}
-        onChange={e => {
-          onChange(e)
+        onChange={(e) => {
+          onChange(e);
         }}
-        onSearch={searchContent => {
-          onSearch(searchContent)
+        onSearch={(searchContent) => {
+          const { handleUpdateData } = this.props;
+          handleUpdateData(searchContent);
         }}
         className="euiFieldSearch"
       />
-    )
+    );
 
-    return searchBox
+    return searchBox;
   }
-
 }
-

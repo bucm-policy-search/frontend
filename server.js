@@ -8,17 +8,15 @@ const handle = app.getRequestHandler();
 app.prepare()
   .then(() => {
     const server = express();
-    server.get('*', (req, res) => {
-      return handle(req, res);
-    });
+    server.get('*', (req, res) => handle(req, res));
     server.listen(3000, (err) => {
       if (err) throw err;
-      console.log('> Ready on http://localhost:3000');
-    })
+      console.warn('> Ready on http://localhost:3000');
+    });
   })
   // This server is used for client directing.
   // Don't put elasticsearch's part in this file, cause it was banned due to safety factor.
   .catch((ex) => {
     console.error(ex.stack);
     process.exit(1);
-  })
+  });
