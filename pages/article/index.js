@@ -4,8 +4,6 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import parse, { attributesToProps } from "html-react-parser";
 
-import styles from "./index.module.css";
-
 function Search() {
   const router = useRouter();
   const { q } = router.query;
@@ -70,20 +68,20 @@ function Search() {
     };
 
     return (
-      <div className={styles.article} key={value._source.title}>
-        <h1 className={styles.title}>{value._source.title}</h1>
-        <p className={styles.source}>
+      <div className="mt-8 mx-12 mb-16 text-lg" key={value._source.title}>
+        <h1 className="font-bold text-3xl">{value._source.title}</h1>
+        <p className="text-lg mt-10">
           原文地址：
-          <a href={value._source.urlSource}>
+          <a className="underline" href={value._source.urlSource}>
             {value._source.urlSource}
           </a>
         </p>
-        <div className={styles.detail}>
+        <div className="mt-12 text-xl">
           {parse(value._source.article, options)}
         </div>
-        <div className={styles.attachments}>
+        <div className="mt-8">
           {value._source.attachment.map((value, index) => (
-            <div className={styles.attachment} key={value.link}>
+            <div className="mt-4 underline" key={value.link}>
               附件{index + 1}：<a href={value.link}>{value.mark}</a>
             </div>
           ))}
@@ -95,7 +93,7 @@ function Search() {
   const Content = (
     <>
       {haveGotResult && data.hits.hits &&
-        <div className={styles.body}>
+        <div>
           {getBody()}
         </div>
       }
@@ -105,7 +103,7 @@ function Search() {
   const Page = (
     <div>
       {haveGotResult ?
-        Content : <div className={styles.body}>正在获取信息...</div>
+        Content : <div>正在获取信息...</div>
       }
     </div>
   );
