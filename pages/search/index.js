@@ -102,7 +102,7 @@ function Search(props) {
             </a>
             <div className="font-light line-clamp-3" key={value._source.id + "-1"}>
               {value.highlight && value.highlight.plaintext ?
-                parse(String(value.highlight.plaintext)) : ""}
+                parse((value.highlight.plaintext).join(' ')) : ""}
             </div>
           </div>
         ))}
@@ -162,6 +162,8 @@ function Search(props) {
 export async function getServerSideProps(context) {
   const { q } = context.query;
   const { page } = context.query;
+
+  
 
   const url = `${process.env.NEXT_PUBLIC_PROXY_URL}/api/search?q=${q}&page=${page}`;
   // Fetch data from external API
