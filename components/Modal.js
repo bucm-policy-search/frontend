@@ -42,14 +42,14 @@ export default function Modal(props) {
             <div className="sm:flex sm:items-start">
               <div className="mx-auto flex-shrink-0 flex items-center justify-center sm:mx-0 sm:h-10 sm:w-10">
                 {/* Heroicon name: outline/exclamation */}
-                <InfoIcon fontSize="large"/>
+                <InfoIcon fontSize="large" />
               </div>
               <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <h3 className="text-xl leading-6 font-medium text-gray-900" id="modal-title">
+                <h3 className="text-xl  leading-6 font-medium text-gray-900" id="modal-title">
                   关于我们
                 </h3>
                 <div className="mt-2">
-                  <p className="text-gray-500">
+                  <p className="text-gray-500 xl:text-xl">
                     北京中医药大学管理学院学生，想做些对世界有意义的事
                   </p>
                 </div>

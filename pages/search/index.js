@@ -121,7 +121,7 @@ function Search(props) {
             <h1 className="text-center mt-10 sm:mt-14 lg:mt-16 text-3xl font-bold md:text-5xl lg:text-6xl lg:font-medium sm:font-extrabold self-center ">搜索引擎</h1>
           </a>
           <form className="flex mt-4 md:mt-8 lg:mt-12 sm:mx-8 md:ml-16 lg:mx-32" onSubmit={handleSearch}>
-            <div className="flex-auto flex item-center border border-gray-300 h-10 lg:h-12 py-2 px-2 rounded-lg md:w-3/4 lg:w-5/6 xl:max-w-2xl">
+            <div className="flex-auto flex item-center border border-gray-300 h-10 lg:h-12 py-2 px-2 rounded-lg md:w-3/4 md:max- lg:max-w-2xl">
               <SearchIcon className="item-center" />
               <input className="flex-1 p-2 ml-2 lg:text-xl sm:text-lg focus:outline-none focus:ring-2
               focus:ring-blue-300 focus:border-transparent" value={inputValue} onChange={handleInputChange} />
