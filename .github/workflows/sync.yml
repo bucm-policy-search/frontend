@@ -1,0 +1,9 @@
+- name: Hub Mirror Action.
+  uses: Yikun/hub-mirror-action@v1.1
+  with:
+    account_type: org
+    src: github/bucm-policy-search
+    dst: gitee/bucm-policy-search
+    dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+    dst_token: ${{ secrets.GITEE_TOKEN }}
+    clone_style: ssh
