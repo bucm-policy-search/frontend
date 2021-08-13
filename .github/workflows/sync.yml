@@ -18,3 +18,6 @@ jobs:
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
           clone_style: ssh
+          timeout: 600
+          debug: true
+          force_update: true
