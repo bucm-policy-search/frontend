@@ -47,6 +47,7 @@ function Home() {
   const home = (
 
     <div className="min-w-max h-screen flex flex-col text-lg md:text-xl lg:text-2xl font-custom">
+      <div ><a href="./advanced_search" className="float-right mr-12 mt-8 text-lg">高级搜索</a></div>
       <div className="mt-16 mx-5 md:mx-24 lg:mt-48 xl:mt-64 flex-auto">
         <h1 className="text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-center">中医药政策搜索</h1>
         <form className="md:w-3/4 xl:max-w-screen-md mx-auto" onSubmit={handleSubmit}>
