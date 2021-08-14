@@ -24,8 +24,7 @@ function Home() {
           q: inputValue,
           page: 1,
         },
-      },
-        `/search?q=${inputValue}&page=1`);
+      });
     };
   };
 

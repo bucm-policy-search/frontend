@@ -22,16 +22,26 @@ function Search(props) {
   };
 
   const handleSearch = () => {
-    event.preventDefault(); // ignore ts's deprecated warning, it still works now
-    router.push({
-      pathname: "/search",
-      query: {
-        q: inputValue,
-        page,
-      },
-    },
-      `/search?q=${inputValue}&page=${page}`,
-      { shallow: true });
+    event.preventDefault(); // ignore deprecated warning, it still works now
+    if (inputValue) {
+      if (router.query.q !== inputValue) {
+        router.push({
+          pathname: "/search",
+          query: {
+            q: inputValue,
+            page: 1,
+          },
+        });
+      } else {
+        router.push({
+          pathname: "/search",
+          query: {
+            q: inputValue,
+            page,
+          },
+        });
+      }
+    }
   };
 
   // 页面 - 页数栏内容
@@ -162,8 +172,6 @@ function Search(props) {
 export async function getServerSideProps(context) {
   const { q } = context.query;
   const { page } = context.query;
-
-  
 
   const url = `${process.env.NEXT_PUBLIC_PROXY_URL}/api/search?q=${q}&page=${page}`;
   // Fetch data from external API
