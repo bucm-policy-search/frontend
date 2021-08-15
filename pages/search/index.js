@@ -48,20 +48,20 @@ function PageNumRow({ q, page, data }) {
   const prevUrl = `http://localhost:3000/search?q=${q}&page=${parseInt(page, 10) - 1}`;
   const nextUrl = `http://localhost:3000/search?q=${q}&page=${parseInt(page, 10) + 1}`;
   return (
-    <div className="flex justify-center text-lg mb-14 lg:mb-24 mt-10 " >
+    <div className="flex justify-center text-lg mb-14 lg:mb-24 mt-10">
       {/* 响应式设计：lg:1024px，xl:1280px  lg为ipad pro竖屏时的长度 */}
 
       {/* width < lg */}
-      <div className="flex justify-around ">
-        <a href={prevUrl} className={page !== String(1) ? "visible" : "invisible"}> <ArrowBackIosIcon /> </a>
+      <div className="flex justify-around lg:hidden w-60">
+        <a href={prevUrl} className={page !== 1 ? "visible lg:invisible" : "invisible"}> <ArrowBackIosIcon /> </a>
         <strong >第{page}页</strong>
-        <a href={nextUrl} className={page !== String(Math.ceil(data.hits.total.value / 10)) ? "visible lg:invisible" : "invisible"}> <ArrowForwardIosIcon /> </a>
+        <a href={nextUrl} className={page !== Math.ceil(data.hits.total.value / 10) ? "visible lg:invisible" : "invisible"}> <ArrowForwardIosIcon /> </a>
       </div>
 
-      <div className="lg:hidden w-full">
-        <div className="inline w-full lg:ml-32 md:mt-8">
+      <div className="hidden lg:flex w-full">
+        <div className="inline w-full md:mt-8">
           {/* 响应式设计：lg:1024px，xl:1280px  lg为ipad pro竖屏时的长度 */}
-          <div className="hidden lg:flex text-xl lg:text-2xl lg:max-w-screen-xl">
+          <div className="hidden lg:flex w-full justify-start text-xl lg:text-2xl max-w-screen-lg">
             <div>当前页数：</div>
             <div className="flex">{components}</div>
           </div>
@@ -80,7 +80,7 @@ function Content({ data }) {
 
   // eslint-disable-next-line react/destructuring-assignment
   const contents = data.hits.hits.map((value) => (
-    <div className="mt-6 lg:mt-8" key={value._source.id}>
+    <div className="mt-6 lg:mt-8 max-w-screen-lg" key={value._source.id}>
       <a className="font-medium underline text-blue-600 text-lg md:text-xl" href={`/article?q=${String(value._source.title)}`} key={value._source.id + "-0"}>
         {value._source.title}
       </a>
@@ -91,11 +91,18 @@ function Content({ data }) {
     </div>
   ));
   return (
-    <div className="mt-4 lg:mt-8 sm:mx-8 md:ml-16 lg:mx-32 flex flex-col items-center">
-      <div className="max-w-screen-xl">
-        <div className="mb-4 lg:mb-8">
-          {`共搜索到 ${num} 条结果`}
+    <div className="mt-4 lg:mt-8  flex flex-col items-center">
+      <div className="">
+        <div className="mb-4 lg:mb-8 flex justify-between">
+          <div>
+            {`共搜索到 ${num} 条结果`}
+          </div>
+
+          <div className="text-sm lg:text-base underline">
+            <a href="./advanced_search" >高级搜索</a>
+          </div>
         </div>
+
         {contents}
       </div>
     </div>
@@ -137,52 +144,31 @@ function Search({ data }) {
   };
 
   return (
-    <div>
-      <div className="mx-4 font-custom md:text-lg ">
 
-        {/* iPad Pro or narrower screen */}
-        <div className="xl:hidden flex flex-col">
-          <div className="flex flex-column justify-end h-full mt-4 mr-12 text-sm"><a href="./advanced_search" >高级搜索</a></div>
-          <a href="..">
-            <h1 className="text-center mt-10 sm:mt-14 lg:mt-16 text-3xl font-bold md:text-5xl lg:text-6xl lg:font-medium sm:font-extrabold self-center ">搜索引擎</h1>
-          </a>
-          <form className="flex mt-4 md:mt-8 lg:mt-12 sm:mx-8 md:ml-16 lg:mx-32" onSubmit={handleSearch}>
-            <div className="flex-auto flex item-center border border-gray-300 h-10 lg:h-12 py-2 px-2 rounded-lg md:w-3/4 md:max- lg:max-w-2xl">
-              <SearchIcon className="item-center" />
-              <input className="flex-1 p-2 ml-2 lg:text-xl sm:text-lg focus:outline-none focus:ring-2
+    <div className="font-custom lg:text-lg mx-8 md:mx-16 lg:mx-32 mt-10 lg:mt-16 flex flex-col items-center">
+
+      <div className="lg:flex w-full max-w-screen-lg">
+        <div className=" flex-none ">
+          <h1 className="text-3xl font-bold lg:text-4xl md:font-extrabold lg:font-normal w-full text-center">
+            <a href="..">搜索引擎</a>
+          </h1>
+        </div>
+
+        <form className="flex mt-4 lg:mt-0 lg:ml-16 w-full min-w-xs" onSubmit={handleSearch}>
+          <div className="flex flex-1 item-center border border-gray-300 h-10 lg:h-12 py-2 px-2 rounded-lg">
+            <SearchIcon className="items-center" />
+            <input className="flex-1 p-2 ml-2 lg:text-xl sm:text-lg focus:outline-none focus:ring-2
               focus:ring-blue-300 focus:border-transparent" value={inputValue} onChange={handleInputChange} />
-            </div>
-            <button className="flex-initial h-10 lg:h-12 border rounded-md  ml-4 lg:ml-8 w-24" type="submit" variant="outlined">搜索</button>
-          </form>
-        </div>
-
-        {/* desktop or wider screen */}
-        <div className="hidden xl:flex flex- mx-32 justify-center ">
-          <div><a href="./advanced_search" className="absolute right-12 top-8 text-lg">高级搜索</a></div>
-          <div className="flex flex-col">
-            <div className="w-full flex mt-20 max-w-screen-xl">
-              <a href="..">
-                {/* Next.js pic is strange, just ignore */}
-                {/* <Image className={styles.pic} alt="图片加载中..." \
-          src='/seach-icon.jpg' width={80} height={60} /> */}
-                <h1 className=" text-5xl font-extrabold self-center">搜索引擎</h1>
-              </a>
-              <form className="flex  ml-12 w-3/4 max-w-screen-sm" onSubmit={handleSearch}>
-                <div className="flex-auto flex border border-gray-300 h-12 py-2 px-2 rounded-lg ">
-                  <SearchIcon className="self-center" />
-                  <input className="flex-1 p-2 ml-2 lg:text-xl sm:text-lg focus:outline-none focus:ring-2
-              focus:ring-blue-300 focus:border-transparent w-64" value={inputValue} onChange={handleInputChange} />
-                </div>
-                <button className="flex-initial h-10 lg:h-12 border rounded-md  ml-4 lg:ml-8 w-24" type="submit" variant="outlined">搜索</button>
-              </form></div>
           </div>
-        </div>
-
-        <Content data={data} />
-        <PageNumRow q={q} data={data} page={page} />
-
+          <button className="flex-initial h-10 lg:h-12 border rounded-md ml-4 lg:ml-8 w-24" type="submit" variant="outlined">搜索</button>
+        </form>
       </div>
-    </div >
+
+      <Content data={data} />
+      <PageNumRow q={q} data={data} page={page} />
+
+    </div>
+
   );
 }
 

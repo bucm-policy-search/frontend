@@ -9,6 +9,13 @@ module.exports = {
       fontFamily: {
         'custom': ["Helvetica Neue", "Helvetica", "Arial", "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "sans-serif"],
       },
+      minWidth: {
+        "full": "100%",
+        "2xs": "375px",
+        "xs": "414px",
+        "sm": "640px",
+        "md": "768px"
+      }
     }
   },
   variants: {
