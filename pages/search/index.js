@@ -9,13 +9,105 @@ import SearchIcon from "@material-ui/icons/Search";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
-function Search(props) {
+// 页面 - 页数栏内容
+function PageNumRow({ q, page, data }) {
+  const components = [];
+  if (data.hits) {
+    const pageMax = Math.ceil(data.hits.total.value / 10);
+
+    if (page <= 4) {
+      for (let i = 1; i <= pageMax && (i <= page + 6 || i <= 10); i += 1) {
+        const url = `http://localhost:3000/search?q=${q}&page=${i}`;
+
+        components[i] = (i === page)
+          ? (
+            <div className="ml-8 font-bold">{i}</div>
+          )
+          : (
+            <div className="ml-8">
+              <a className="underline text-blue-600" href={url}>{i}</a>
+            </div>
+          );
+      }
+    } else {
+      for (let i = page - 4; i <= pageMax && (i - page < 6); i += 1) {
+        const url = `http://localhost:3000/search?q=${q}&page=${i}`;
+
+        components[i] = (i === page)
+          ? (
+            <div className="ml-8 font-bold">{i}</div>
+          )
+          : (
+            <div className="ml-8">
+              <a className="underline text-blue-600" href={url}>{i}</a>
+            </div>
+          );
+      }
+    }
+  }
+  const prevUrl = `http://localhost:3000/search?q=${q}&page=${parseInt(page, 10) - 1}`;
+  const nextUrl = `http://localhost:3000/search?q=${q}&page=${parseInt(page, 10) + 1}`;
+  return (
+    <div className="flex justify-center text-lg mb-14 lg:mb-24 mt-10 " >
+      {/* 响应式设计：lg:1024px，xl:1280px  lg为ipad pro竖屏时的长度 */}
+
+      {/* width < lg */}
+      <div className="flex justify-around ">
+        <a href={prevUrl} className={page !== String(1) ? "visible" : "invisible"}> <ArrowBackIosIcon /> </a>
+        <strong >第{page}页</strong>
+        <a href={nextUrl} className={page !== String(Math.ceil(data.hits.total.value / 10)) ? "visible lg:invisible" : "invisible"}> <ArrowForwardIosIcon /> </a>
+      </div>
+
+      <div className="lg:hidden w-full">
+        <div className="inline w-full lg:ml-32 md:mt-8">
+          {/* 响应式设计：lg:1024px，xl:1280px  lg为ipad pro竖屏时的长度 */}
+          <div className="hidden lg:flex text-xl lg:text-2xl lg:max-w-screen-xl">
+            <div>当前页数：</div>
+            <div className="flex">{components}</div>
+          </div>
+        </div>
+      </div>
+      {/* width >= lg */}
+
+
+    </div >
+  );
+};
+
+// 共搜索到xx条结果 及 搜索内容标题和缩略内容
+function Content({ data }) {
+  const num = data.hits.total.value;
+
+  // eslint-disable-next-line react/destructuring-assignment
+  const contents = data.hits.hits.map((value) => (
+    <div className="mt-6 lg:mt-8" key={value._source.id}>
+      <a className="font-medium underline text-blue-600 text-lg md:text-xl" href={`/article?q=${String(value._source.title)}`} key={value._source.id + "-0"}>
+        {value._source.title}
+      </a>
+      <div className="font-light line-clamp-3" key={value._source.id + "-1"}>
+        {value.highlight && value.highlight.plaintext ?
+          parse((value.highlight.plaintext).join(' ')) : ""}
+      </div>
+    </div>
+  ));
+  return (
+    <div className="mt-4 lg:mt-8 sm:mx-8 md:ml-16 lg:mx-32 flex flex-col items-center">
+      <div className="max-w-screen-xl">
+        <div className="mb-4 lg:mb-8">
+          {`共搜索到 ${num} 条结果`}
+        </div>
+        {contents}
+      </div>
+    </div>
+  );
+}
+
+function Search({ data }) {
   const router = useRouter();
   const { q } = router.query;
   const page = parseInt(router.query.page, 10);
 
   const [inputValue, setInputValue] = useState(q || "");
-  const { data } = props;
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -44,89 +136,13 @@ function Search(props) {
     }
   };
 
-  // 页面 - 页数栏内容
-  const PageNum = () => {
-    const components = [];
-    if (data.hits) {
-      const pageMax = Math.ceil(data.hits.total.value / 10);
-
-      if (page <= 4) {
-        for (let i = 1; i <= pageMax && (i <= page + 6 || i <= 10); i += 1) {
-          const url = `http://localhost:3000/search?q=${q}&page=${i}`;
-
-          components[i] = (i === page)
-            ? (
-              <div className="ml-8 font-bold">{i}</div>
-            )
-            : (
-              <div className="ml-8">
-                <a className="underline text-blue-600" href={url}>{i}</a>
-              </div>
-            );
-        }
-      } else {
-        for (let i = page - 4; i <= pageMax && (i - page < 6); i += 1) {
-          const url = `http://localhost:3000/search?q=${q}&page=${i}`;
-
-          components[i] = (i === page)
-            ? (
-              <div className="ml-8 font-bold">{i}</div>
-            )
-            : (
-              <div className="ml-8">
-                <a className="underline text-blue-600" href={url}>{i}</a>
-              </div>
-            );
-        }
-
-      }
-    }
-    const prevUrl = `http://localhost:3000/search?q=${q}&page=${parseInt(page, 10) - 1}`;
-    const nextUrl = `http://localhost:3000/search?q=${q}&page=${parseInt(page, 10) + 1}`;
-    return (
-      <div className="flex text-lg mb-14 lg:mb-24 mt-10 text-center justify-items-center">
-        <div className="flex lg:hidden w-full justify-around">
-          <a href={prevUrl} className={page !== String(1) ? "visible lg:invisible" : "invisible"}> <ArrowBackIosIcon /> </a>
-          <strong >第{page}页</strong>
-          <a href={nextUrl} className={page !== String(Math.ceil(data.hits.total.value / 10)) ? "visible lg:invisible" : "invisible"}> <ArrowForwardIosIcon /> </a>
-        </div>
-        <div className="hidden lg:flex md:ml-32 md:mt-8 text-xl xl:text-2xl">
-          <div>当前页数：</div>
-          <div className="flex">{components}</div>
-        </div>
-      </div >
-    );
-  };
-
-  // 共搜索到xx条结果 及 搜索内容标题和缩略内容
-  const Content = (
-    <>
-      <div className="mt-4 lg:mt-8 sm:mx-8 md:ml-16 lg:mx-32 ">
-        <div className="mb-4 lg:mb-8">
-          共搜索到 {` ${data.hits.total.value} `} 条结果
-        </div>
-        {data.hits.hits.map((value) => (
-          <div className="mt-6 lg:mt-8" key={value._source.id}>
-            <a className="font-medium underline text-blue-600 text-lg md:text-xl" href={`/article?q=${String(value._source.title)}`} key={value._source.id + "-0"}>
-              {value._source.title}
-            </a>
-            <div className="font-light line-clamp-3" key={value._source.id + "-1"}>
-              {value.highlight && value.highlight.plaintext ?
-                parse((value.highlight.plaintext).join(' ')) : ""}
-            </div>
-          </div>
-        ))}
-      </div>
-
-    </>
-  );
-
-  // Page总内容，引入 Content 和 PageNum 两部分内容
-  const Page = (
+  return (
     <div>
-      <div className="mx-4 font-custom md:text-lg">
+      <div className="mx-4 font-custom md:text-lg ">
+
         {/* iPad Pro or narrower screen */}
-        <div className="xl:hidden">
+        <div className="xl:hidden flex flex-col">
+          <div className="flex flex-column justify-end h-full mt-4 mr-12 text-sm"><a href="./advanced_search" >高级搜索</a></div>
           <a href="..">
             <h1 className="text-center mt-10 sm:mt-14 lg:mt-16 text-3xl font-bold md:text-5xl lg:text-6xl lg:font-medium sm:font-extrabold self-center ">搜索引擎</h1>
           </a>
@@ -141,39 +157,42 @@ function Search(props) {
         </div>
 
         {/* desktop or wider screen */}
-        <div className="hidden xl:flex mx-32">
-          <a href="..">
-            {/* Next.js pic is strange, just ignore */}
-            {/* <Image className={styles.pic} alt="图片加载中..." \
+        <div className="hidden xl:flex flex- mx-32 justify-center ">
+          <div><a href="./advanced_search" className="absolute right-12 top-8 text-lg">高级搜索</a></div>
+          <div className="flex flex-col">
+            <div className="w-full flex mt-20 max-w-screen-xl">
+              <a href="..">
+                {/* Next.js pic is strange, just ignore */}
+                {/* <Image className={styles.pic} alt="图片加载中..." \
           src='/seach-icon.jpg' width={80} height={60} /> */}
-            <h1 className="text-center mt-12 text-5xl font-extrabold sm:font-extrabold self-center">搜索引擎</h1>
-          </a>
-          <form className="flex mt-4 md:mt-8 lg:mt-12 ml-12 w-3/4 max-w-screen-sm" onSubmit={handleSearch}>
-            <div className="flex-auto flex border border-gray-300 h-12 py-2 px-2 rounded-lg ">
-              <SearchIcon className="self-center" />
-              <input className="flex-1 p-2 ml-2 lg:text-xl sm:text-lg focus:outline-none focus:ring-2
+                <h1 className=" text-5xl font-extrabold self-center">搜索引擎</h1>
+              </a>
+              <form className="flex  ml-12 w-3/4 max-w-screen-sm" onSubmit={handleSearch}>
+                <div className="flex-auto flex border border-gray-300 h-12 py-2 px-2 rounded-lg ">
+                  <SearchIcon className="self-center" />
+                  <input className="flex-1 p-2 ml-2 lg:text-xl sm:text-lg focus:outline-none focus:ring-2
               focus:ring-blue-300 focus:border-transparent w-64" value={inputValue} onChange={handleInputChange} />
-            </div>
-            <button className="flex-initial h-10 lg:h-12 border rounded-md  ml-4 lg:ml-8 w-24" type="submit" variant="outlined">搜索</button>
-          </form>
+                </div>
+                <button className="flex-initial h-10 lg:h-12 border rounded-md  ml-4 lg:ml-8 w-24" type="submit" variant="outlined">搜索</button>
+              </form></div>
+          </div>
         </div>
 
-        {Content}
-
-        {PageNum()}
+        <Content data={data} />
+        <PageNumRow q={q} data={data} page={page} />
 
       </div>
     </div >
   );
-
-  return (Page);
 }
 
-export async function getServerSideProps(context) {
-  const { q } = context.query;
-  const { page } = context.query;
+export async function getServerSideProps({ query }) {
+  const { q } = query;
+  const { page } = query;
 
-  const url = `${process.env.NEXT_PUBLIC_PROXY_URL}/api/search?q=${q}&page=${page}`;
+  const url = query.isAdvancedSearch ?
+    `${process.env.NEXT_PUBLIC_PROXY_URL}/api/advanced_search?q=${q}&page=${page}`
+    : `${process.env.NEXT_PUBLIC_PROXY_URL}/api/search?q=${q}&page=${page}`;
   // Fetch data from external API
   const res = await fetch(encodeURI(url));
   const data = await res.json();

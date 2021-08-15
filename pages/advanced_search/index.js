@@ -38,20 +38,20 @@ function Home() {
     const include = document.getElementById("include-content").value;
     const exclude = document.getElementById("exclude-content").value;
 
-    let releaseDate1 = document.getElementById("release-date-1").value;
-    let releaseDate2 = document.getElementById("release-date-2").value;
-    if (releaseDate1 > releaseDate2) {
-      const tmp = releaseDate1;
-      releaseDate1 = releaseDate2;
-      releaseDate2 = tmp;
+    let publishingDate1 = document.getElementById("publishing-date-1").value;
+    let publishingDate2 = document.getElementById("publishing-date-2").value;
+    if (publishingDate1 > publishingDate2) {
+      const tmp = publishingDate1;
+      publishingDate1 = publishingDate2;
+      publishingDate2 = tmp;
     }
 
-    let crawlDate1 = document.getElementById("crawl-date-1").value;
-    let crawlDate2 = document.getElementById("crawl-date-2").value;
-    if (crawlDate1 > crawlDate2) {
-      const tmp = crawlDate1;
-      crawlDate1 = crawlDate2;
-      crawlDate2 = tmp;
+    let scrapyDate1 = document.getElementById("scrapy-date-1").value;
+    let scrapyDate2 = document.getElementById("scrapy-date-2").value;
+    if (scrapyDate1 > scrapyDate2) {
+      const tmp = scrapyDate1;
+      scrapyDate1 = scrapyDate2;
+      scrapyDate2 = tmp;
     }
 
     const infoSource = document.getElementById("info-source").value;
@@ -65,7 +65,7 @@ function Home() {
       containAttachment = "";
     }
 
-    containData = q || include || exclude || releaseDate1 || releaseDate2 || crawlDate1 || crawlDate2 || infoSource || containAttachment;
+    containData = q || include || exclude || publishingDate1 || publishingDate2 || scrapyDate1 || scrapyDate2 || infoSource || containAttachment;
 
 
     if (containData !== "") {
@@ -78,12 +78,13 @@ function Home() {
           page: 1,
           include,
           exclude,
-          releaseDate1,
-          releaseDate2,
-          crawlDate1,
-          crawlDate2,
+          publishingDate1,
+          publishingDate2,
+          scrapyDate1,
+          scrapyDate2,
           infoSource,
-          containAttachment
+          containAttachment,
+          isAdvancedSearch: true
         }
       });
     }
@@ -97,8 +98,8 @@ function Home() {
         <Input type="text" content="普通搜索" innerId="general-search" />
         <Input type="text" content="必备关键词" innerId="include-content" />
         <Input type="text" content="排除关键词" innerId="exclude-content" />
-        <Input type="date" content="发布时间" innerId="release-date" />
-        <Input type="date" content="爬取时间" innerId="crawl-date" />
+        <Input type="date" content="发布时间" innerId="publishing-date" />
+        <Input type="date" content="爬取时间" innerId="scrapy-date" />
         <Input type="text" content="信息来源" innerId="info-source" />
         <Input type="radio" content="是否含附件" innerId="contain-attachment" />
         <input type="submit" value="搜索" className="mt-12 w-24 h-12" />
