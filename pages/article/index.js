@@ -41,21 +41,21 @@ function Content({ data }) {
   return (
     <div className="flex justify-center">
       <div className="mt-8 mx-12 lg:mt-12 lg:mx-24 mb-16 text-lg max-w-screen-lg" key={value._source.title}>
-        <h1 className="font-bold text-3xl">{value._source.title}</h1>
-        <div className="flex justify-evenly mt-8 lg:mt-10">
+        <h1 className="font-bold text-3xl text-center">{value._source.title}</h1>
+        <div className="flex flex-wrap justify-center mt-8 lg:mt-10">
           <div>
             发布时间：{value._source.publishingDate}
+          </div>
+          <div className="">
+            <a className="underline mx-6" href={value._source.urlSource}>
+              原文地址
+            </a>
           </div>
           <div>
             爬取时间：{value._source.scrapyDate}
           </div>
         </div>
-        <p className="text-lg mt-10">
-          原文地址：
-          <a className="underline" href={value._source.urlSource}>
-            {value._source.urlSource}
-          </a>
-        </p>
+
         <div className="mt-12 text-xl">
           {parse(value._source.article, options)}
         </div>
