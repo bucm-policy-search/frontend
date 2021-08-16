@@ -125,8 +125,8 @@ function Search({ data }) {
     setInputValue(e.target.value);
   };
 
-  const handleSearch = () => {
-    event.preventDefault(); // ignore deprecated warning, it still works now
+  const handleSearch = (event) => {
+    event.preventDefault();
     if (inputValue) {
       if (router.query.q !== inputValue) {
         router.push({
@@ -180,9 +180,6 @@ function Search({ data }) {
 export async function getServerSideProps({ query }) {
 
   const { q, page, include, exclude, publishingDate1, publishingDate2, scrapyDate1, scrapyDate2, infoSource, containAttachment, isAdvancedSearch } = query;
-
-  console.log("getServerSideProps data:");
-  console.log(getServerSideProps);
 
   const url = isAdvancedSearch ?
     `${process.env.NEXT_PUBLIC_PROXY_URL}/api/advanced_search?q=${q}&page=${page}&include=${include}&exclude=${exclude}&publishingDate1=${publishingDate1}&publishingDate2=${publishingDate2}&scrapyDate1=${scrapyDate1}&scrapyDate2=${scrapyDate2}&infoSource=${infoSource}&containAttachment=${containAttachment}`
