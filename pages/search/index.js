@@ -10,14 +10,19 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 // 页面 - 页数栏内容
-function PageNumRow({ q, page, data }) {
+function PageNumRow({ data }) {
   const components = [];
+  const router = useRouter();
+  const { q, page, include, exclude, publishingDate1, publishingDate2, scrapyDate1, scrapyDate2, infoSource, containAttachment, isAdvancedSearch } = router.query;
+  const url = isAdvancedSearch ?
+    `${process.env.NEXT_PUBLIC_BASE_URL}/search?q=${q}&include=${include}&exclude=${exclude}&publishingDate1=${publishingDate1}&publishingDate2=${publishingDate2}&scrapyDate1=${scrapyDate1}&scrapyDate2=${scrapyDate2}&infoSource=${infoSource}&containAttachment=${containAttachment}&isAdvancedSearch=true`
+    : `${process.env.NEXT_PUBLIC_BASE_URL}/search?q=${q}`;
+
   if (data.hits) {
     const pageMax = Math.ceil(data.hits.total.value / 10);
 
     if (page <= 4) {
       for (let i = 1; i <= pageMax && (i <= page + 6 || i <= 10); i += 1) {
-        const url = `http://localhost:3000/search?q=${q}&page=${i}`;
 
         components[i] = (i === page)
           ? (
@@ -25,13 +30,13 @@ function PageNumRow({ q, page, data }) {
           )
           : (
             <div className="ml-8">
-              <a className="underline text-blue-600" href={url}>{i}</a>
+              <a className="underline text-blue-600" href={`${url}&page=${i}`}>{i}</a>
             </div>
           );
       }
     } else {
       for (let i = page - 4; i <= pageMax && (i - page < 6); i += 1) {
-        const url = `http://localhost:3000/search?q=${q}&page=${i}`;
+
 
         components[i] = (i === page)
           ? (
@@ -39,7 +44,7 @@ function PageNumRow({ q, page, data }) {
           )
           : (
             <div className="ml-8">
-              <a className="underline text-blue-600" href={url}>{i}</a>
+              <a className="underline text-blue-600" href={`${url}&page=${i}`}>{i}</a>
             </div>
           );
       }
@@ -81,7 +86,7 @@ function Content({ data }) {
   // eslint-disable-next-line react/destructuring-assignment
   const contents = data.hits.hits.map((value) => (
     <div className="mt-6 lg:mt-8 max-w-screen-lg" key={value._source.id}>
-      <a className="font-medium underline text-blue-600 text-lg md:text-xl" href={`/article?q=${String(value._source.title)}`} key={value._source.id + "-0"}>
+      <a className="font-medium underline text-blue-600 text-lg md:text-xl" href={`/article?q=${String(value._source.title)}`} key={value._source.id}>
         {value._source.title}
       </a>
       <div className="font-light line-clamp-3" key={value._source.id + "-1"}>
@@ -173,11 +178,14 @@ function Search({ data }) {
 }
 
 export async function getServerSideProps({ query }) {
-  const { q } = query;
-  const { page } = query;
 
-  const url = query.isAdvancedSearch ?
-    `${process.env.NEXT_PUBLIC_PROXY_URL}/api/advanced_search?q=${q}&page=${page}`
+  const { q, page, include, exclude, publishingDate1, publishingDate2, scrapyDate1, scrapyDate2, infoSource, containAttachment, isAdvancedSearch } = query;
+
+  console.log("getServerSideProps data:");
+  console.log(getServerSideProps);
+
+  const url = isAdvancedSearch ?
+    `${process.env.NEXT_PUBLIC_PROXY_URL}/api/advanced_search?q=${q}&page=${page}&include=${include}&exclude=${exclude}&publishingDate1=${publishingDate1}&publishingDate2=${publishingDate2}&scrapyDate1=${scrapyDate1}&scrapyDate2=${scrapyDate2}&infoSource=${infoSource}&containAttachment=${containAttachment}`
     : `${process.env.NEXT_PUBLIC_PROXY_URL}/api/search?q=${q}&page=${page}`;
   // Fetch data from external API
   const res = await fetch(encodeURI(url));
