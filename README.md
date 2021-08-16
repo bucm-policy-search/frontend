@@ -9,6 +9,13 @@
 
 其他可见`package.json`
 
+## 运行方式
+
+进入文件夹，根据不同执行对应代码
+
+- dev: `npm run dev`
+- prod: `pm2 start ecosystem.config.js --env production`
+
 ## 遇到的问题及解决方式
 
 1. 尝试直接通过带用户名和密码绕过去
