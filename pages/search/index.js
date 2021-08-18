@@ -22,9 +22,9 @@ function PageNumRow({ data }) {
     const pageMax = Math.ceil(data.hits.total.value / 10);
 
     if (page <= 4) {
-      for (let i = 1; i <= pageMax && (i <= page + 6 || i <= 10); i += 1) {
+      for (let i = 1; i <= pageMax && i <= 10 && i <= page + 6; i += 1) {
 
-        components[i] = (i === page)
+        components[i] = (i === parseInt(page, 10))
           ? (
             <div className="ml-8 font-bold">{i}</div>
           )
@@ -38,7 +38,7 @@ function PageNumRow({ data }) {
       for (let i = page - 4; i <= pageMax && (i - page < 6); i += 1) {
 
 
-        components[i] = (i === page)
+        components[i] = (i === parseInt(page, 10))
           ? (
             <div className="ml-8 font-bold">{i}</div>
           )
