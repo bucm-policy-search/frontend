@@ -15,6 +15,7 @@
     "html-react-parser": "^1.2.8",
     "moment": "^2.29.1",
     "next": "^11.1.0",
+    "next-useragent": "^2.6.0",
     "nextjs-redirect": "^5.0.2",
     "prop-types": "^15.7.2",
     "qs": "^6.10.1",

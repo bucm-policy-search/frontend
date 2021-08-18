@@ -14,7 +14,7 @@
 进入文件夹，根据不同执行对应代码
 
 - dev: `npm run dev`
-- prod: `pm2 start ecosystem.config.js --env production`
+- prod: `npm run build && pm2 start ecosystem.config.js --env production`
 
 ## 遇到的问题及解决方式
 
