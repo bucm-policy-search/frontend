@@ -24,7 +24,9 @@ module.exports = {
     }
   },
   plugins: [
+    // A plugin that provides utilities for visually truncating text after a fixed number of lines.
     require('@tailwindcss/line-clamp'),
-    require('@tailwindcss/forms')
+    // Change Default forms to TailwindCSS Styles. Both web and Android support but iOS don't support now (08/29/2021).
+    // require('@tailwindcss/forms')
   ],
 };
