@@ -50,8 +50,8 @@ function PageNumRow({ data }) {
       }
     }
   }
-  const prevUrl = `http://localhost:3000/search?q=${q}&page=${parseInt(page, 10) - 1}`;
-  const nextUrl = `http://localhost:3000/search?q=${q}&page=${parseInt(page, 10) + 1}`;
+  const prevUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/search?q=${q}&page=${parseInt(page, 10) - 1}`;
+  const nextUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/search?q=${q}&page=${parseInt(page, 10) + 1}`;
   return (
     <div className="flex justify-center text-lg mb-14 lg:mb-24 mt-10">
       {/* 响应式设计：lg:1024px，xl:1280px  lg为ipad pro竖屏时的长度 */}
@@ -63,6 +63,7 @@ function PageNumRow({ data }) {
         <a href={nextUrl} className={page !== Math.ceil(data.hits.total.value / 10) ? "visible lg:invisible" : "invisible"}> <ArrowForwardIosIcon /> </a>
       </div>
 
+      {/* width >= lg */}
       <div className="hidden lg:flex w-full">
         <div className="inline w-full md:mt-8">
           {/* 响应式设计：lg:1024px，xl:1280px  lg为ipad pro竖屏时的长度 */}
@@ -72,7 +73,7 @@ function PageNumRow({ data }) {
           </div>
         </div>
       </div>
-      {/* width >= lg */}
+
 
 
     </div >
@@ -89,7 +90,7 @@ function Content({ data }) {
       <a className="font-medium underline text-blue-600 text-lg md:text-xl" href={`/article?q=${String(value._source.title)}`} key={value._source.id}>
         {value._source.title}
       </a>
-      <div className="font-light line-clamp-3" key={value._source.id + "-1"}>
+      <div className="font-light line-clamp-3" key={value._source.id + "_1"}>
         {value.highlight && value.highlight.plaintext ?
           parse((value.highlight.plaintext).join(' ')) : ""}
       </div>
