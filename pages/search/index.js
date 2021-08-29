@@ -65,7 +65,7 @@ function PageNumRow({ data }) {
       <div className="hidden lg:flex w-full">
         <div className="inline w-full md:mt-8">
           {/* 响应式设计：lg:1024px，xl:1280px  lg为ipad pro竖屏时的长度 */}
-          <div className="hidden lg:flex w-full justify-start text-xl lg:text-2xl max-w-screen-lg">
+          <div className="hidden lg:flex w-full justify-start text-xl lg:text-2xl">
             <div>当前页数：</div>
             <div className="flex">{components}</div>
           </div>

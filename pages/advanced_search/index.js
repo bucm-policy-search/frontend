@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 function Input({ type, content, innerId }) {
   // 返回普通
   return (
-    <div className="flex w-11/12 sm:w-5/6 md:w-2/3 lg:w-1/2 xl:w-1/4 2xl:w-4/12 justify-between mt-6  leading-10" >
+    <div className="flex w-11/12 sm:w-5/6 md:w-2/3 lg:w-1/2 2xl:w-4/12 justify-between mt-6  leading-10" >
 
       {/* 左侧介绍 */}
       <div className="flex flex-none item-center w-32 "><text>{content}</text></div>
@@ -19,9 +19,9 @@ function Input({ type, content, innerId }) {
         {/* 日期 */}
         {type === "date" &&
           <div className="flex flex-auto flex-col sm:flex-row w-full justify-between">
-            <div> <input type="date" id={`${innerId}-1`} className="px-2 rounded-md border min-w-min" /></div>
-            <div className="w-full"><text className="px-3">至</text></div>
-            <div> <input type="date" id={`${innerId}-2`} className="px-2 rounded-md  border flex-auto  min-w-min" /></div>
+            <div> <input type="date" id={`${innerId}-1`} className="px-2 rounded-md border min-w-full 2xl:w-64" /></div>
+            <div><text className="px-3">至</text></div>
+            <div> <input type="date" id={`${innerId}-2`} className="px-2 rounded-md border flex-auto  min-w-full 2xl:w-64" /></div>
           </div>
         }
 
@@ -105,7 +105,7 @@ function Home() {
 
   return (
     <div>
-      <div><a href="../" className="float-right mr-8 lg:mr-24 mt-8 text-lg">主页</a></div>
+      <div><a href="../" className="float-right mr-8 lg:mr-24 mt-8 text-lg xl:text-xl">主页</a></div>
       <form onSubmit={handleSubmit} className="w-screen flex flex-col items-center text-lg">
         <Input type="text" content="普通搜索" innerId="general-search" />
         <Input type="text" content="必备关键词" innerId="include-content" />
@@ -114,7 +114,7 @@ function Home() {
         <Input type="date" content="爬取时间" innerId="scrapy-date" />
         <Input type="text" content="信息来源" innerId="info-source" />
         <Input type="radio" content="是否含附件" innerId="contain-attachment" />
-        <input type="submit" value="搜索" className="mt-12 w-24 h-12" />
+        <input type="submit" value="搜索" className="mt-12 w-24 h-12 mb-12" />
       </form>
     </div>
 

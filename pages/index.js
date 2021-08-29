@@ -50,9 +50,9 @@ function Home() {
       <div className="mt-16 mx-5 md:mx-24 lg:mt-36 flex-auto">
         <h1 className="text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-center">中医药政策搜索</h1>
         <form className="md:w-3/4 xl:max-w-screen-md mx-auto" onSubmit={handleSubmit}>
-          <div className="flex items-center mt-12 mx-5 lg:mt-16 xl:mt-24 border border-gray-300 rounded-lg h-12 py-2 px-4">
+          <div className="flex items-center mt-12 mx-5 lg:mt-16 xl:mt-24 border border-gray-300 rounded-lg h-12 px-4">
             <SearchIcon className="fill-current text-gray-400 hover:text-black" onClick={handleSubmit} />
-            <input className="h-8 flex-1 py-2 px-4 text-xl focus:outline-none"
+            <input className="h-8 flex-1 px-4 text-xl focus:outline-none"
               value={inputValue} onChange={handleInputChange} />
             <CloseRoundedIcon className="ill-current text-gray-400 hover:text-black" onClick={handleClearContent} />
           </div>
