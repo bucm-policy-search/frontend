@@ -3,25 +3,37 @@ import React from "react";
 import { useRouter } from "next/router";
 
 function Input({ type, content, innerId }) {
+  // 返回普通
   return (
-    <div className="flex lg-w-3/4 mt-6 h-10 leading-10" >
-      <div className="flex item-center w-28"><text>{content}</text></div>
-      <div className="ml-12 w-96 justify-between">
-        {type === "text" && <input type="text" content={content} id={innerId} className="border rounded-md w-full" />}
+    <div className="flex w-11/12 sm:w-5/6 md:w-2/3 lg:w-1/2 xl:w-1/4 2xl:w-4/12 justify-between mt-6  leading-10" >
+
+      {/* 左侧介绍 */}
+      <div className="flex flex-none item-center w-32 "><text>{content}</text></div>
+
+      {/* 右侧方框、日期、按钮等 */}
+      <div className="flex flex-auto w-full">
+
+        {/* 普通文本 */}
+        {type === "text" && <input type="text" content={content} id={innerId} className="border rounded-md w-full px-2 " />}
+
+        {/* 日期 */}
         {type === "date" &&
-          <div className="flex">
-            <div> <input type="date" id={`${innerId}-1`} className="rounded-md w-44" /></div>
-            <text className="px-2">至</text>
-            <div> <input type="date" id={`${innerId}-2`} className="rounded-md w-44" /></div>
+          <div className="flex flex-auto flex-col sm:flex-row w-full justify-between">
+            <div> <input type="date" id={`${innerId}-1`} className="px-2 rounded-md border min-w-min" /></div>
+            <div className="w-full"><text className="px-3">至</text></div>
+            <div> <input type="date" id={`${innerId}-2`} className="px-2 rounded-md  border flex-auto  min-w-min" /></div>
           </div>
         }
+
+        {/* 按键 */}
         {type === "radio" &&
-          <div className="flex">
-            <div> <input type="radio" id={`${innerId}-1`} name="radios" /> 是</div>
-            <div className="ml-12"> <input type="radio" id={`${innerId}-2`} name="radios" /> 否</div>
-            <div className="ml-12"> <input type="radio" id={`${innerId}-3`} name="radios" defaultChecked /> 无要求</div>
+          <div className="flex flex-wrap">
+            <div className="mr-12"> <input type="radio" id={`${innerId}-1`} name="radios" /> 是</div>
+            <div className="mr-12"> <input type="radio" id={`${innerId}-2`} name="radios" /> 否</div>
+            <div className="mr-12"> <input type="radio" id={`${innerId}-3`} name="radios" defaultChecked /> 无要求</div>
           </div>
         }
+
       </div>
     </div>
 
@@ -93,8 +105,8 @@ function Home() {
 
   return (
     <div>
-      <div><a href="../" className="float-right mr-24 mt-8 text-lg">主页</a></div>
-      <form onSubmit={handleSubmit} className="w-screen flex flex-col items-center text-lg mt-24">
+      <div><a href="../" className="float-right mr-8 lg:mr-24 mt-8 text-lg">主页</a></div>
+      <form onSubmit={handleSubmit} className="w-screen flex flex-col items-center text-lg">
         <Input type="text" content="普通搜索" innerId="general-search" />
         <Input type="text" content="必备关键词" innerId="include-content" />
         <Input type="text" content="排除关键词" innerId="exclude-content" />

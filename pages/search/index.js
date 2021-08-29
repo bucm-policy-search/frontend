@@ -36,8 +36,6 @@ function PageNumRow({ data }) {
       }
     } else {
       for (let i = page - 4; i <= pageMax && (i - page < 6); i += 1) {
-
-
         components[i] = (i === parseInt(page, 10))
           ? (
             <div className="ml-8 font-bold">{i}</div>
@@ -58,9 +56,9 @@ function PageNumRow({ data }) {
 
       {/* width < lg */}
       <div className="flex justify-around lg:hidden w-60">
-        <a href={prevUrl} className={page !== 1 ? "visible lg:invisible" : "invisible"}> <ArrowBackIosIcon /> </a>
+        <a href={prevUrl} className={parseInt(page, 10) !== 1 ? "visible lg:invisible" : "invisible"}> <ArrowBackIosIcon /> </a>
         <strong >第{page}页</strong>
-        <a href={nextUrl} className={page !== Math.ceil(data.hits.total.value / 10) ? "visible lg:invisible" : "invisible"}> <ArrowForwardIosIcon /> </a>
+        <a href={nextUrl} className={parseInt(page, 10) !== Math.ceil(data.hits.total.value / 10) ? "visible lg:invisible" : "invisible"}> <ArrowForwardIosIcon /> </a>
       </div>
 
       {/* width >= lg */}
@@ -160,13 +158,13 @@ function Search({ data }) {
           </h1>
         </div>
 
-        <form className="flex mt-4 lg:mt-0 lg:ml-16 w-full min-w-xs" onSubmit={handleSearch}>
+        <form className="flex mt-4 lg:mt-0 lg:ml-16 w-full min-w-min" onSubmit={handleSearch}>
           <div className="flex flex-1 item-center border border-gray-300 h-10 lg:h-12 py-2 px-2 rounded-lg">
             <SearchIcon className="items-center" />
             <input className="flex-1 p-2 ml-2 lg:text-xl sm:text-lg focus:outline-none focus:ring-2
-              focus:ring-blue-300 focus:border-transparent" value={inputValue} onChange={handleInputChange} />
+              focus:ring-blue-300 focus:border-transparent w-36 sm:w-full" value={inputValue} onChange={handleInputChange} />
           </div>
-          <button className="flex-initial h-10 lg:h-12 border rounded-md ml-4 lg:ml-8 w-24" type="submit" variant="outlined">搜索</button>
+          <button className="flex-initial h-10 lg:h-12 border rounded-md ml-4 lg:ml-8 w-16 sm:w-24" type="submit" variant="outlined">搜索</button>
         </form>
       </div>
 
