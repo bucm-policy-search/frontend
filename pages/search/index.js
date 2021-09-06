@@ -5,10 +5,6 @@ import { useRouter } from "next/router";
 // import Image from 'next/image';
 import parse from 'html-react-parser';
 
-import SearchIcon from "@material-ui/icons/Search";
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-
 // 页面 - 页数栏内容
 function PageNumRow({ data }) {
   const components = [];
@@ -56,9 +52,23 @@ function PageNumRow({ data }) {
 
       {/* width < lg */}
       <div className="flex justify-around lg:hidden w-60">
-        <a href={prevUrl} className={parseInt(page, 10) !== 1 ? "visible lg:invisible" : "invisible"}> <ArrowBackIosIcon /> </a>
-        <strong >第{page}页</strong>
-        <a href={nextUrl} className={parseInt(page, 10) !== Math.ceil(data.hits.total.value / 10) ? "visible lg:invisible" : "invisible"}> <ArrowForwardIosIcon /> </a>
+        <a href={prevUrl} className={parseInt(page, 10) !== 1 ? "visible lg:invisible" : "invisible"}>
+          <div className="flex items-center h-full">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+            </svg>
+          </div>
+        </a>
+
+        <strong>第{page}页</strong>
+
+        <a href={nextUrl} className={parseInt(page, 10) !== Math.ceil(data.hits.total.value / 10) ? "visible lg:invisible" : "invisible"}>
+          <div className="flex items-center h-full">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+            </svg>
+          </div>
+        </a>
       </div>
 
       {/* width >= lg */}
@@ -71,9 +81,6 @@ function PageNumRow({ data }) {
           </div>
         </div>
       </div>
-
-
-
     </div >
   );
 };
@@ -124,6 +131,10 @@ function Search({ data }) {
     setInputValue(e.target.value);
   };
 
+  const handleClearContent = () => {
+    setInputValue("");
+  };
+
   const handleSearch = (event) => {
     event.preventDefault();
     if (inputValue) {
@@ -160,9 +171,23 @@ function Search({ data }) {
 
         <form className="flex mt-4 lg:mt-0 lg:ml-16 w-full min-w-min" onSubmit={handleSearch}>
           <div className="flex flex-1 item-center border border-gray-300 h-10 lg:h-12 py-2 px-2 rounded-lg">
-            <SearchIcon className="items-center" />
+            {/* Search Icon */}
+            <div className="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-current text-gray-400 hover:text-black items-center" viewBox="0 0 20 20" fill="currentColor" onClick={handleSearch}>
+                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+              </svg>
+            </div>
+
             <input className="flex-1 p-2 ml-2 lg:text-xl sm:text-lg focus:outline-none focus:ring-2
               focus:ring-blue-300 focus:border-transparent w-36 sm:w-full" value={inputValue} onChange={handleInputChange} />
+
+            {/* Close Icon */}
+            <div className="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-current text-gray-400 hover:text-black" viewBox="0 0 20 20" fill="currentColor" onClick={handleClearContent}>
+                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </div>
+
           </div>
           <button className="flex-initial h-10 lg:h-12 border rounded-md ml-4 lg:ml-8 w-16 sm:w-24" type="submit" variant="outlined">搜索</button>
         </form>
@@ -172,7 +197,6 @@ function Search({ data }) {
       <PageNumRow q={q} data={data} page={page} />
 
     </div>
-
   );
 }
 
