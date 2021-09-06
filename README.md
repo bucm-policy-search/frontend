@@ -1,3 +1,7 @@
+# 前端文档
+
+![Travis Status](https://app.travis-ci.com/gricn/frontend.svg?branch=beta)
+
 ## 介绍
 
 前端部分使用 React 开发，使用技术或内容包括：

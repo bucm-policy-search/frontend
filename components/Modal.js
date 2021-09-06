@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/self-closing-comp */
 import React from "react";
-import InfoIcon from '@material-ui/icons/Info';
 
 export default function Modal(props) {
 
@@ -40,12 +39,14 @@ export default function Modal(props) {
         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <div className="sm:flex sm:items-start">
-              <div className="mx-auto flex-shrink-0 flex items-center justify-center sm:mx-0 sm:h-10 sm:w-10">
-                {/* Heroicon name: outline/exclamation */}
-                <InfoIcon fontSize="large" />
-              </div>
+              {/* <div className="mx-auto flex-shrink-0 flex items-center justify-center sm:mx-0 sm:h-10 sm:w-10"> */}
+              {/* Heroicon name: outline/exclamation */}
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+              </svg>
+              {/* </div> */}
               <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <h3 className="text-xl  leading-6 font-medium text-gray-900" id="modal-title">
+                <h3 className="text-xl leading-6 font-medium text-gray-900 select-none" id="modal-title">
                   关于我们
                 </h3>
                 <div className="mt-2">
