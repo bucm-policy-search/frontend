@@ -1,6 +1,6 @@
 # 前端文档
 
-![Travis Status](https://app.travis-ci.com/gricn/frontend.svg?branch=beta)
+![Travis Status](https://app.travis-ci.com/bucm-policy-search/frontend.svg?branch=beta)
 
 ## 介绍
 
