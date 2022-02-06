@@ -34,6 +34,14 @@
   @apply h-5 w-5;
 }
 
+.hyperLinkDisplayed {
+  @apply lg:visible text-blue-600 ml-8;
+}
+
+.hyperLinkHidden {
+  @apply hidden;
+}
+
 .content {
   @apply mt-6 lg:mt-8 max-w-screen-lg;
 }
