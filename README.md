@@ -42,4 +42,4 @@ Check the render method of `Search`.
 常在 this.setState 报错，用`[]`或`{}`包裹对应的值
 
 7. Router.push()不起作用
-   `event.preventDefault();` 这行代码务必不要删除，不然导致页面刷新时
+   `event.preventDefault();` 这行代码忽略报错，不要删除，删除会导致页面刷新时发生错误

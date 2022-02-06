@@ -74,8 +74,16 @@ function PageNumRow({ data }) {
 
       {/* width >= lg */}
       <div className={styles.bigScreen}>
-        <div>当前页数：</div>
-        <div className="flex">{components}</div>
+
+
+        <div className={parseInt(page, 10) !== 1 ? styles.hyperLinkDisplayed : styles.hyperLinkHidden}>
+          <a href={prevUrl} >上一页</a>
+        </div>
+        {components}
+        <div className={parseInt(page, 10) !== Math.ceil(data.hits.total.value / 10) ? styles.hyperLinkDisplayed : styles.hyperLinkHidden}>
+          <a href={nextUrl}>下一页</a>
+        </div>
+
       </div>
     </div >
   );
