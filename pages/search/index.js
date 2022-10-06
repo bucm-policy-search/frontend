@@ -191,7 +191,7 @@ function Search({ data }) {
             </div>
 
           </div>
-          <button className={styles.searchButton} type="submit" variant="outlined">搜索</button>
+          <button className={styles.searchButton} type="submit">搜索</button>
         </form>
       </div>
 
