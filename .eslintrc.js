@@ -9,6 +9,7 @@ module.exports = {
         "plugin:react/recommended",
         "airbnb",
         "prettier",
+        'plugin:@next/next/recommended',
     ],
     "parserOptions": {
         "ecmaFeatures": {
