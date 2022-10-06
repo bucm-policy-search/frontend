@@ -15,7 +15,9 @@
 
 ## 运行方式
 
-进入文件夹，根据不同执行对应代码
+安装 `nvm` 后，使用 `nvm` 安装 Node 16版本
+
+进入主仓库，根据不同执行对应代码
 
 - dev: `npm run dev`
 - prod: `npm run build && pm2 start ecosystem.config.js --env production`
