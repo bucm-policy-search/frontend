@@ -45,3 +45,5 @@ Check the render method of `Search`.
 
 7. Router.push()不起作用
    `event.preventDefault();` 这行代码忽略报错，不要删除，删除会导致页面刷新时发生错误
+
+8. 受精力限制，如今测试部分没有有效代码
