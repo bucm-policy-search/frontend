@@ -28,6 +28,10 @@ function Home() {
     }
   };
 
+  const setModalClose = () => {
+    setHitModal(false);
+  };
+
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -75,7 +79,7 @@ function Home() {
             <button className={styles.aboutUsButton} type="button" onClick={handleAboutUS}>
               关于我们
             </button>
-            {hitModal ? <Modal hitModal={hitModal} setHitModal={setHitModal} /> : null}
+            {hitModal ? <Modal setModalClose={setModalClose} /> : null}
           </div>
         </form>
       </div>
